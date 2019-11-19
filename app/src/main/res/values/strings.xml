@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">TimeHunter</string>
+    <string name="group_descrip">Group Description:</string>
+    <string name="group_name">Group Name:</string>
+    <string name="add_photo_label">Add Group Photo</string>
+    <string name="create_group_title">Create Group</string>
+    <string name="create_confirm">Create</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="group_info">Enter Group Information</string>
 </resources>

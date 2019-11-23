@@ -1,26 +1,40 @@
 package com.example.timehunter
 
-import androidx.room.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 
-@Entity
-data class Notification(
-    @PrimaryKey val uid: Int,
-    @ColumnInfo(name = "icon") val firstName: String?,
-    @ColumnInfo(name = "last_name") val lastName: String?,
-    @ColumnInfo(name = "ref") val ref: String?
-)
+class Notification(val title:String, val icon: Int)
 
-@Dao
-interface NotificationDao {
-    @Query("SELECT * FROM notification LIMIT :limit")
-    fun getSome(limit: String): List<Notification>
+class NotificationAdapter (private val notifications:ArrayList<Notification>):
+    RecyclerView.Adapter<NotificationAdapter.NotificationHolder>() {
 
-    @Insert
-    fun insert(notification: Notification)
+    class NotificationHolder(v: View) : RecyclerView.ViewHolder(v){
+        val textView: TextView
+        val imageView: ImageView
 
-}
+        init{
+            textView = v.findViewById(R.id.title)
+            imageView = v.findViewById(R.id.icon)
+        }
+    }
 
-@Database(entities = arrayOf(Notification::class), version = 1)
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun notificationDao(): NotificationDao
+    override fun onCreateViewHolder(parent: ViewGroup,
+                                    viewType: Int): NotificationHolder {
+        val layout = LayoutInflater.from(parent.context).inflate(R.layout.notification, parent,false)
+
+        return NotificationHolder(layout)
+    }
+
+    override fun onBindViewHolder(holder: NotificationHolder, position: Int) {
+        val item = notifications[position]
+        holder.imageView.setImageResource(item.icon)
+        holder.textView.text = item.title
+        println(item.title)
+    }
+
+    override fun getItemCount() = notifications.size
 }

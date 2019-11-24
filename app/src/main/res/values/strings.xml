@@ -11,5 +11,6 @@
     <string name="confirm_page_title">Confirm Group Details</string>
     <string name="confirm_group_name_label">Group Name: </string>
     <string name="confirm_group_desc_label">Group Description: </string>
+    <string name="confirm_group_contacts">Contacts: </string>
     <string name="create_edit">EDIT</string>
 </resources>

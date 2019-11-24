@@ -20,6 +20,11 @@ class ConfrimGroup : AppCompatActivity(){
         editButton.setOnClickListener{
             finish()
         }
+
+        val cancelButton = findViewById<TextView>(R.id.cancel_action)
+        cancelButton.setOnClickListener{
+            finish()
+        }
     }
 
 }

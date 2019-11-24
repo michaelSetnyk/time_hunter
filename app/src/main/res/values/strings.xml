@@ -7,4 +7,8 @@
     <string name="create_confirm">Create</string>
     <string name="cancel_button">Cancel</string>
     <string name="group_info">Enter Group Information</string>
+    <string name="confirm_page_title">Confirm Group Details</string>
+    <string name="confirm_group_name_label">Group Name: </string>
+    <string name="confirm_group_desc_label">Group Description: </string>
+    <string name="create_edit">EDIT</string>
 </resources>

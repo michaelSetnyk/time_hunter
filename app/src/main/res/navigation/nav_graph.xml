@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/mainFragment"
     android:id="@+id/main">
-
-
 
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.timehunter.MainFragment"
-        android:label="MainFragment" />
+        android:label="MainFragment" >
+    </fragment>
 
     <fragment
         android:id="@+id/groupsPageFragment"
         android:name="com.example.timehunter.GroupsPage"
-        android:label="Groups_page" />
+        android:label="Groups_page" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/createGroupFragment"
+        android:name="com.example.timehunter.CreateGroupFragment"
+        android:label="create_group"
+        tools:layout="@layout/create_group" />
 
     <action android:id="@+id/action_global_mainFragment"
         app:destination="@id/mainFragment"/>
 
     <action android:id="@+id/action_global_groupsPageFragment"
         app:destination="@id/groupsPageFragment"/>
+
+    <action android:id="@+id/action_global_createGroupsPage"
+        app:destination="@id/createGroupFragment"/>
 
 </navigation>

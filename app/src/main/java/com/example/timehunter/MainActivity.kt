@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val createGroup = Intent(this@MainActivity, GroupActivity::class.java)
+        val createGroup = Intent(this@MainActivity, Create_Event::class.java)
         startActivity(createGroup)
     }
 }

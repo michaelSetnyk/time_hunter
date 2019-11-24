@@ -19,8 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GroupActivity"></activity>
-        <activity android:name=".ConfrimGroup"></activity>
+        <activity android:name=".Create_Event"></activity>
+        <activity android:name=".pick_date"></activity>
     </application>
 
 </manifest>

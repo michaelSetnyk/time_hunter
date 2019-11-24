@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
-class ConfrimGroup : AppCompatActivity(){
+class pick_date : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.confirm_group)
+        setContentView(R.layout.pick_date)
 
         val receive_name = findViewById<TextView>(R.id.confirm_group_name)
         receive_name.setText(intent.getStringExtra("GroupName"))

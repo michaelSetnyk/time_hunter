@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ConfrimGroup"
+    tools:context=".pick_date"
     android:background="@drawable/background">
 
 
@@ -27,7 +27,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/confirm_group_name_label"
+        android:text="@string/pick_time"
         android:textColor="#CFCFCF"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,19 +50,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.17" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/confirm_group_desc_label"
-        android:textColor="#CFCFCF"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24" />
+
 
     <TextView
         android:id="@+id/confirm_group_desc"
@@ -150,7 +138,7 @@
         android:id="@+id/confirm_contacts_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/confirm_group_contacts"
+        android:text="@string/event_contacts"
         android:textColor="#CFCFCF"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -74,7 +74,6 @@ class MainFragment : Fragment() {
             context,
             R.dimen.viewpager_current_icon_horizontal_margin
         )
-        println("icon page adapters")
 
         val layoutManger = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         layoutManger.scrollToPosition(1)

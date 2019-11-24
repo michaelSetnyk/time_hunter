@@ -93,7 +93,7 @@
         android:id="@+id/confirm_text"
         android:layout_width="81dp"
         android:layout_height="36dp"
-        android:text="@string/create_confirm"
+        android:text="@string/create"
         android:textColor="#E3E3E3"
         android:textStyle="bold"
         android:textSize="20sp"

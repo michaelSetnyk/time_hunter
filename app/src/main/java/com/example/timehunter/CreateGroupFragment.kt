@@ -20,6 +20,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.create_group.*
 
 
@@ -31,6 +32,7 @@ class CreateGroupFragment : Fragment() {
         super.onCreate(savedInstanceState)
         groupName=""
         groupDesc=""
+
     }
 
 
@@ -78,8 +80,9 @@ class CreateGroupFragment : Fragment() {
             val dialogBuilder = AlertDialog.Builder(context)
             dialogBuilder.setMessage("Do you want cancel creating this group?")
                 .setCancelable(false)
-                .setPositiveButton("Delete", DialogInterface.OnClickListener(){
-                        dialog, id -> activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
+                .setPositiveButton("Delete", DialogInterface.OnClickListener(){_,_ ->
+                    val navController = findNavController()
+                        navController.popBackStack()
                 })
                 .setNeutralButton("Continue Creating Group", DialogInterface.OnClickListener(){
                         dialog, id ->  dialog.cancel()

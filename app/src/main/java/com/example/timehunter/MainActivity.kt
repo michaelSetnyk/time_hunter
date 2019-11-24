@@ -2,6 +2,7 @@ package com.example.timehunter
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
@@ -33,7 +34,12 @@ class MainActivity :  AppCompatActivity() {
 
         bottomNavigationView.setupWithNavController(navController)
         navView.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener{_, _, _ ->
+        navController.addOnDestinationChangedListener{_, dest, _ ->
+            if (dest.id == R.id.createGroupFragment){
+                bottomNavigationView.visibility = View.GONE
+            }else{
+                bottomNavigationView.visibility = View.VISIBLE
+            }
 
             toolbar.title=""
         }

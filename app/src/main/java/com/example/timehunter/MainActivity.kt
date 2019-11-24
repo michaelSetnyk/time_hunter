@@ -1,97 +1,43 @@
 package com.example.timehunter
 
-import android.content.Context
 import android.os.Bundle
-import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.ListView
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
-import kotlin.math.abs
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewPager: ViewPager2
-    private lateinit var iconView: RecyclerView
-
+class MainActivity :  AppCompatActivity() {
+    private lateinit var appBarConfig: AppBarConfiguration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val context = applicationContext
-        viewPager = findViewById(R.id.view_pager)
-        iconView = findViewById(R.id.icon_group)
-        val notificationList = findViewById<RecyclerView>(R.id.notifications)
+        val navController = findNavController(R.id.nav_host_fragment)
 
-        val beerEvent = GroupEventItem("Beer Night", "This Friday Night 9pm",R.drawable.beer)
-        val raptorEvent = GroupEventItem("Raptors Game", "This Saturday 7:30 pm",R.drawable.raptors)
-        val hciGroup = GroupEventItem("HCI Study Group", "December 3rd 12:00pm",R.drawable.hci)
+        val toolbar =  findViewById<Toolbar>(R.id.toolbar)
+        appBarConfig = AppBarConfiguration(navController.graph, drawer_layout)
+        toolbar.setupWithNavController(navController,appBarConfig)
 
-        val beerNotification = Notification("Confirm Pickup",R.drawable.beer)
-        val raptorNotification = Notification("Vote on HCI Study Day",R.drawable.hci)
-        val HCINotification = Notification("All Riders Confirmed",R.drawable.raptors)
-
-
-        val groupEventItems = arrayListOf(beerEvent,raptorEvent,hciGroup)
-        val notifications = arrayListOf(beerNotification,raptorNotification,HCINotification)
-
-        val nextItemVisiblePx = resources.getDimension(R.dimen.viewpager_next_item_visible)
-        val currentItemHorizontalMarginPx = resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin)
-        val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
-        val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
-            page.translationX = -pageTranslationX * position
-            page.scaleY = 1 - (0.5f * abs(position))
-        }
-
-        val layoutManger = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
-        layoutManger.scrollToPosition(0)
-
-        notificationList.apply {
-            setHasFixedSize(true)
-            layoutManager=layoutManger
-            adapter = NotificationAdapter(notifications)
-        }
-
-        prepCarousel(pageTransformer,context,groupEventItems)
-        prepIcons(pageTransformer,context,groupEventItems)
+        val navView = findViewById<NavigationView>(R.id.nav_view)
+        navView.setupWithNavController(navController)
+        toolbar.title=""
     }
 
-    fun prepIcons(pageTransformer: ViewPager2.PageTransformer,
-                 context:Context,
-                 items: ArrayList<GroupEventItem>){
-        val itemDecoration = HorizontalMarginItemDecoration(context,
-            R.dimen.viewpager_current_icon_horizontal_margin)
-        println("icon page adapters")
-
-        val layoutManger = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
-        layoutManger.scrollToPosition(1)
-        val iconAdapter = IconPageAdapter(items)
-
-        iconView.apply {
-            setHasFixedSize(true)
-            layoutManager=layoutManger
-            adapter=iconAdapter
-        }
-        iconView.addItemDecoration(itemDecoration)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
+        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
 
-    fun prepCarousel(pageTransformer: ViewPager2.PageTransformer,
-                     context: Context,
-                     items: ArrayList<GroupEventItem>){
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.navigation, menu);
 
-        val fragments:ArrayList<Fragment> = ArrayList(items.map {GroupEventsFragment.newInstance(it)})
-
-        val itemDecoration = HorizontalMarginItemDecoration(
-            context,
-            R.dimen.viewpager_current_item_horizontal_margin
-        )
-        val adapter = CarouselPageAdapter(this, fragments)
-        viewPager.adapter = adapter
-        viewPager.currentItem = 1
-        viewPager.offscreenPageLimit = 1
-        viewPager.addItemDecoration(itemDecoration)
-        viewPager.setPageTransformer(pageTransformer)
+        return true
     }
 }

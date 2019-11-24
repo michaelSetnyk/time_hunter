@@ -67,7 +67,7 @@ class IconPageAdapter (private val items:ArrayList<GroupEventItem>):
     override fun getItemCount() = items.size
 }
 
-class CarouselPageAdapter (fa:FragmentActivity, private val fragments:ArrayList<Fragment>): FragmentStateAdapter(fa) {
+class CarouselPageAdapter (f:Fragment, private val fragments:ArrayList<Fragment>): FragmentStateAdapter(f) {
     override fun getItemCount(): Int = fragments.size
     override fun createFragment(position: Int): Fragment = fragments[position]
 }

@@ -1,44 +1,63 @@
 package com.example.timehunter
 
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ImageButton
 import android.Manifest
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
-import androidx.core.widget.addTextChangedListener
-import kotlinx.android.synthetic.main.group_activity.*
+import androidx.core.content.PermissionChecker.checkSelfPermission
+import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.create_group.*
 
 
-class GroupActivity : AppCompatActivity() {
+class CreateGroupFragment : Fragment() {
 
+    private  lateinit var groupName:String
+    private  lateinit var groupDesc:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.group_activity)
+        groupName=""
+        groupDesc=""
+    }
 
-        var groupName = ""
-        var groupDesc = ""
-        val confirm = findViewById<TextView>(R.id.confirm_text)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val layout = inflater.inflate(R.layout.create_group, container, false)
+        val cancelAction = layout.findViewById<TextView>(R.id.cancel_action)
+        val confirm = layout.findViewById<TextView>(R.id.confirm_text)
+        val groupPhotoButton = layout.findViewById<ImageButton>(R.id.groupPhotoAdd)
+        val groupNameText = layout.findViewById<EditText>(R.id.group_name)
+        val groupDescText = layout.findViewById<EditText>(R.id.group_description1)
+        val contactAddButton = layout.findViewById<ImageButton>(R.id.add_contact)
+
+        val context = requireContext()
+
         confirm.setOnClickListener{
-            val intent = Intent(this@GroupActivity, ConfrimGroup::class.java)
+            val intent = Intent(context, ConfrimGroup::class.java)
             intent.putExtra("GroupName", groupName)
             intent.putExtra("GroupDesc", groupDesc)
             startActivity(intent)
         }
 
-        val groupPhotoButton = findViewById<ImageButton>(R.id.groupPhotoAdd)
         groupPhotoButton.setOnClickListener {
-
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+            if (checkSelfPermission(context,Manifest.permission.READ_EXTERNAL_STORAGE) ==  PackageManager.PERMISSION_DENIED){
                 val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
                 requestPermissions(permissions, PHOTO_PERMISSION_CODE)
             } else {
@@ -46,10 +65,8 @@ class GroupActivity : AppCompatActivity() {
             }
         }
 
-        val contactAddButton = findViewById<ImageButton>(R.id.add_contact)
         contactAddButton.setOnClickListener{
-
-            if (checkSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_DENIED){
+            if (checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_DENIED){
                 val permissions = arrayOf(Manifest.permission.READ_CONTACTS)
                 requestPermissions(permissions, CONTACT_PERMISSION_CODE)
             } else {
@@ -57,30 +74,22 @@ class GroupActivity : AppCompatActivity() {
             }
         }
 
-        val cancelAction = findViewById<TextView>(R.id.cancel_action)
         cancelAction.setOnClickListener{
-            val dialogBuilder = AlertDialog.Builder(this)
-
+            val dialogBuilder = AlertDialog.Builder(context)
             dialogBuilder.setMessage("Do you want cancel creating this group?")
-
                 .setCancelable(false)
-
                 .setPositiveButton("Delete", DialogInterface.OnClickListener(){
-                        dialog, id -> finish()
+                        dialog, id -> activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
                 })
-
                 .setNeutralButton("Continue Creating Group", DialogInterface.OnClickListener(){
                         dialog, id ->  dialog.cancel()
                 })
-
             val alert = dialogBuilder.create()
             alert.setTitle("Cancel")
             alert.show()
         }
 
-        val groupNameText = findViewById<EditText>(R.id.group_name)
         groupNameText.addTextChangedListener(object : TextWatcher {
-
             override fun afterTextChanged(s: Editable){
             }
 
@@ -92,7 +101,6 @@ class GroupActivity : AppCompatActivity() {
             }
         })
 
-        val groupDescText = findViewById<EditText>(R.id.group_description1)
         groupDescText.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable){
@@ -105,6 +113,8 @@ class GroupActivity : AppCompatActivity() {
                 groupDesc = s.toString()
             }
         })
+
+        return layout
     }
 
     companion object {
@@ -131,18 +141,19 @@ class GroupActivity : AppCompatActivity() {
 
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        val context = requireContext()
         when(requestCode){
             PHOTO_PERMISSION_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     pickImageFromGallery()
                 }
                 else{
-                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
             }
 
             CONTACT_PERMISSION_CODE -> {
-                if(grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     contactPicker()
                 }
             }
@@ -151,12 +162,8 @@ class GroupActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE){
             groupPhotoAdd.setImageURI(data?.data)
-        }
-
-        if (requestCode == CONTACT_PERMISSION_CODE && resultCode == RESULT_OK) {
-
         }
     }
 }

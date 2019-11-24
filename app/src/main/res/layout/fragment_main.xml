@@ -27,24 +27,4 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
-            app:labelVisibilityMode="unlabeled"
-            app:itemIconTint="@color/colorAccent"
-            app:itemTextColor="@color/colorAccent"
-            app:menu="@menu/bottom_navigation_menu" />
-
-        <ScrollView
-            android:id="@+id/notifications_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ScrollView>
-    </FrameLayout>
 </LinearLayout>

@@ -7,7 +7,7 @@
         android:id="@+id/bottomNavigationEventMenuId"
         android:icon="@drawable/ic_event_black_24dp"/>
     <item android:title="@string/group"
-        android:id="@+id/bottomNavigationGroupMenuId"
+        android:id="@id/action_global_createGroupsPage"
         android:icon="@drawable/ic_people_black_24dp"/>
     <item android:title="@string/add"
         android:id="@+id/bottom_navigation"

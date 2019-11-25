@@ -1,8 +1,12 @@
 package com.example.timehunter
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import org.w3c.dom.Text
 
 class ConfrimGroup : AppCompatActivity(){
 
@@ -24,6 +28,13 @@ class ConfrimGroup : AppCompatActivity(){
         val cancelButton = findViewById<TextView>(R.id.cancel_action)
         cancelButton.setOnClickListener{
             finish()
+        }
+
+        val createButton = findViewById<TextView>(R.id.create_text)
+        createButton.setOnClickListener{
+            Toast.makeText(this, "Group Saved", Toast.LENGTH_SHORT).show()
+            intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 

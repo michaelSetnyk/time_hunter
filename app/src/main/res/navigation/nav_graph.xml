@@ -15,13 +15,20 @@
         android:id="@+id/groupsPageFragment"
         android:name="com.example.timehunter.GroupsPage"
         android:label="Groups_page" >
+        <action
+            android:id="@+id/action_groupsPageFragment_to_viewGroupFragment"
+            app:destination="@id/viewGroupFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/createGroupFragment"
         android:name="com.example.timehunter.CreateGroupFragment"
         android:label="create_group"
-        tools:layout="@layout/create_group" />
+        tools:layout="@layout/create_group" >
+        <action
+            android:id="@+id/action_createGroupFragment_to_viewGroupFragment"
+            app:destination="@id/viewGroupFragment" />
+    </fragment>
 
     <action android:id="@+id/action_global_mainFragment"
         app:destination="@id/mainFragment"/>
@@ -31,5 +38,13 @@
 
     <action android:id="@+id/action_global_createGroupsPage"
         app:destination="@id/createGroupFragment"/>
+    <fragment
+        android:id="@+id/viewGroupFragment"
+        android:name="com.example.timehunter.ViewGroupFragment"
+        android:label="ViewGroupFragment" >
+        <action
+            android:id="@+id/action_viewGroupFragment_to_createGroupFragment"
+            app:destination="@id/createGroupFragment" />
+    </fragment>
 
 </navigation>

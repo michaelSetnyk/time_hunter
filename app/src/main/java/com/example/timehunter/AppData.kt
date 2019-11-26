@@ -1,10 +1,18 @@
 package com.example.timehunter
 
+object ContactsData{
+    val one = User("Person A")
+    val two = User("Person B")
+    val three =User("Person C")
+    var contacts = arrayListOf(one,two,three)
+}
 // In an actual app this would be a database.
 // But we need some dummy data and a DB is too much work
 object GroupsData{
-    private val hciGroup = Group("HCI","group to study HCI",R.drawable.hci)
-    private val uoitGroup = Group("UOIT","Group from UOIT",R.drawable.uoit)
+    val hci_contacts= arrayListOf(ContactsData.one,ContactsData.three)
+    val uoit_contacts= ContactsData.contacts
+    private val hciGroup = Group("HCI","group to study HCI",R.drawable.hci, hci_contacts)
+    private val uoitGroup = Group("UOIT","Group from UOIT",R.drawable.uoit, uoit_contacts)
 
     var groups = arrayListOf(hciGroup, uoitGroup)
 }
@@ -23,4 +31,5 @@ object CarouselData{
 
      var notifications = arrayListOf(beerNotification, raptorNotification, HCINotification)
  }
+
 

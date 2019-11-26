@@ -21,7 +21,7 @@ class ConfrimGroup : AppCompatActivity(){
         val createButton = findViewById<TextView>(R.id.create_text)
 
         val name = intent.getStringExtra("GroupName")
-        val desc = intent.getStringExtra("GroupName")
+        val desc = intent.getStringExtra("GroupDesc")
 
         receiveName.text = name
         receiveDesc.text = desc

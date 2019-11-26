@@ -4,30 +4,38 @@ package com.example.timehunter
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.navigation.NavigationView
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.fragment_view_group.view.*
 import java.lang.IllegalStateException
 
 class ViewGroupFragment : Fragment() {
 
     companion object {
+        private lateinit var GROUP :Group
         const val ARG_NAME = "name"
         const val ARG_ICON = "icon"
         const val ARG_DESCRIPTION = "description"
         const val ARG_USERS = "users"
 
         fun newInstance(group: Group): ViewGroupFragment {
+            GROUP = group
             val fragment = ViewGroupFragment()
 
             val bundle = Bundle().apply {
@@ -51,8 +59,12 @@ class ViewGroupFragment : Fragment() {
         val descriptionView = layout.findViewById<TextView>(R.id.description)
         val membersView = layout.findViewById<RecyclerView>(R.id.contacts)
         val eventsView = layout.findViewById<RecyclerView>(R.id.upcomingEvents)
+        val contactsListViewer = layout.findViewById<RecyclerView>(R.id.contacts_list)
         val calendarButton = layout.findViewById<MaterialButton>(R.id.calendarButton)
         val weekCalendarView = layout.findViewById<MaterialCalendarView>(R.id.weekCalendarView)
+        val leaveButton = layout.findViewById<MaterialButton>(R.id.leave)
+        val openContacts = layout.findViewById<MaterialButton>(R.id.open_contacts)
+        val contactsDrawer = layout.findViewById<DrawerLayout>(R.id.contacts_drawer)
 
         val icon = arguments?.getInt(ARG_ICON)
         val title = arguments?.getString(ARG_NAME)
@@ -75,7 +87,7 @@ class ViewGroupFragment : Fragment() {
 
         weekCalendarView.topbarVisible=false
 
-        configureContacts(membersView, users)
+        configureContacts(membersView,contactsListViewer, users)
 
         val events = ArrayList<Group>()
         confiureEvents(eventsView, events)
@@ -87,18 +99,43 @@ class ViewGroupFragment : Fragment() {
             calendarFragment.show(fm,"Calendar")
         }
 
+        openContacts.setOnClickListener {
+            if (contactsDrawer.isDrawerOpen(GravityCompat.END)){
+                contactsDrawer.closeDrawer(GravityCompat.END)
+            } else {
+                contactsDrawer.openDrawer(GravityCompat.END)
+            }
+        }
+
+        leaveButton.setOnClickListener {
+            GroupsData.groups.remove(GROUP)
+            findNavController().popBackStack()
+        }
+
         return layout
     }
 
 
 
-    fun configureContacts(recyclerView: RecyclerView, contacts: ArrayList<User>) {
+    fun configureContacts(iconsViewer: RecyclerView, contactsList: RecyclerView, contacts: ArrayList<User>) {
         val layoutManger = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.apply {
+        iconsViewer.apply {
             setHasFixedSize(true)
             layoutManager = layoutManger
             adapter = ContactsAdapter(contacts)
         }
+
+        val contactsListManger = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        contactsList.apply {
+            setHasFixedSize(true)
+            layoutManager = contactsListManger
+            adapter = UserListAdapter(contacts)
+        }
+
+
+
+
+
     }
 
     fun confiureEvents(recyclerView: RecyclerView, events: ArrayList<Group>) {

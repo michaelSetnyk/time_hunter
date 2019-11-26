@@ -14,25 +14,33 @@ class ConfrimGroup : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.confirm_group)
 
-        val receive_name = findViewById<TextView>(R.id.confirm_group_name)
-        receive_name.setText(intent.getStringExtra("GroupName"))
-
-        val receive_desc = findViewById<TextView>(R.id.confirm_group_desc)
-        receive_desc.setText(intent.getStringExtra("GroupDesc"))
-
+        val receiveName = findViewById<TextView>(R.id.confirm_group_name)
+        val receiveDesc = findViewById<TextView>(R.id.confirm_group_desc)
         val editButton = findViewById<TextView>(R.id.edit_text)
+        val cancelButton = findViewById<TextView>(R.id.cancel_action)
+        val createButton = findViewById<TextView>(R.id.create_text)
+
+        val name = intent.getStringExtra("GroupName")
+        val desc = intent.getStringExtra("GroupName")
+
+        receiveName.text = name
+        receiveDesc.text = desc
+
         editButton.setOnClickListener{
             finish()
         }
 
-        val cancelButton = findViewById<TextView>(R.id.cancel_action)
         cancelButton.setOnClickListener{
             finish()
         }
 
-        val createButton = findViewById<TextView>(R.id.create_text)
         createButton.setOnClickListener{
+            if(name!=null && desc != null){
+                val newGroup = Group(name,desc)
+                GroupsData.groups.add(newGroup)
+            }
             Toast.makeText(this, "Group Saved", Toast.LENGTH_SHORT).show()
+            // MOVE INTO FRAGMENT and navigate using UI to the group that's created
             intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }

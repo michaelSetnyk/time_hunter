@@ -26,15 +26,14 @@ import kotlinx.android.synthetic.main.create_group.*
 
 class CreateGroupFragment : Fragment() {
 
-    private  lateinit var groupName:String
-    private  lateinit var groupDesc:String
+    private lateinit var groupName:String
+    private lateinit var groupDesc:String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         groupName=""
         groupDesc=""
-
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,6 +80,7 @@ class CreateGroupFragment : Fragment() {
             dialogBuilder.setMessage("Do you want cancel creating this group?")
                 .setCancelable(false)
                 .setPositiveButton("Delete", DialogInterface.OnClickListener(){_,_ ->
+                    //We can add people in a sec
                     val navController = findNavController()
                         navController.popBackStack()
                 })

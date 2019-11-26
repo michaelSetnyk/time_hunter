@@ -1,5 +1,7 @@
 package com.example.timehunter
 
+import android.content.ClipData
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +17,12 @@ class NotificationAdapter (private val notifications:ArrayList<Notification>):
     class NotificationHolder(v: View) : RecyclerView.ViewHolder(v){
         val textView: TextView
         val imageView: ImageView
+        val removeView: ImageView
 
         init{
             textView = v.findViewById(R.id.title)
             imageView = v.findViewById(R.id.icon)
+            removeView = v.findViewById(R.id.X)
         }
     }
 
@@ -33,7 +37,12 @@ class NotificationAdapter (private val notifications:ArrayList<Notification>):
         val item = notifications[position]
         holder.imageView.setImageResource(item.icon)
         holder.textView.text = item.title
-        println(item.title)
+
+        holder.removeView.setOnClickListener {
+            NotificationsData.notifications.remove(item)
+            notifyItemRemoved(position)
+        }
+
     }
 
     override fun getItemCount() = notifications.size

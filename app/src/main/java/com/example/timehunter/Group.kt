@@ -12,7 +12,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
-class Group (val name: String, val summary: String, val icon :Int, var people: ArrayList<User> = ArrayList<User>())
+data class GroupEventItem(val title: String, val description:String, val iconId: Int)
+data class Group (val name: String, val summary: String, val icon :Int = R.drawable.ic_group_black_24dp, var people: ArrayList<User> = ArrayList<User>())
 
 class GroupAdapter (private val groups:ArrayList<Group>):
     RecyclerView.Adapter<GroupAdapter.GroupHolder>() {

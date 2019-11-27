@@ -10,7 +10,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class User (val photo :Int, val name:String) : Parcelable
+data class User (val name:String, val photo :Int = R.drawable.male_placeholder): Parcelable
 
 class UserListAdapter (private val users:ArrayList<User>):
     RecyclerView.Adapter<UserListAdapter.UserHolder>() {

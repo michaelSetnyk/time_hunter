@@ -10,7 +10,7 @@
         <item
             android:id="@+id/contacts"
             android:title="contacts"
-            android:icon="@drawable/ic_group_black_24dp"/>
+            android:icon="@drawable/ic_contacts_black_24dp"/>
         <item
             android:id="@id/action_global_groupsPageFragment"
             android:title="groups"
@@ -18,7 +18,7 @@
         <item
             android:id="@+id/events"
             android:title="events"
-            android:icon="@drawable/ic_group_black_24dp"/>
+            android:icon="@drawable/ic_event_black_24dp"/>
     </group>
 
 </menu>

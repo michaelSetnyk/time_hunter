@@ -7,17 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.timehunter.GroupsData
 
 class GroupsPage : Fragment(){
 
-    private lateinit var groups : ArrayList<Group>
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val hciGroup = Group("HCI","group to study HCI",R.drawable.hci)
-        val uoitGroup = Group("UOIT","Group from UOIT",R.drawable.uoit)
-        groups = arrayListOf(hciGroup,uoitGroup)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,10 +20,11 @@ class GroupsPage : Fragment(){
         val groupsView = layout.findViewById<RecyclerView>(R.id.groups)
         val layoutManger = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
+        println(GroupsData.groups)
         groupsView.apply {
             setHasFixedSize(true)
             layoutManager = layoutManger
-            adapter = GroupAdapter(groups)
+            adapter = GroupAdapter(GroupsData.groups)
         }
         return layout
     }

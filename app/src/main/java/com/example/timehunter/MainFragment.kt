@@ -1,6 +1,5 @@
 package com.example.timehunter
 
-
 import android.content.Context
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -27,25 +26,11 @@ class MainFragment : Fragment() {
         val layout = inflater.inflate(R.layout.fragment_main, container, false)
         viewPager = layout.findViewById(R.id.view_pager)
         iconView = layout.findViewById(R.id.icon_group)
-
+        val notificationList = layout.findViewById<RecyclerView>(R.id.notifications)
         val context = requireContext()
 
-        val notificationList = layout.findViewById<RecyclerView>(R.id.notifications)
-        val beerEvent = GroupEventItem("Beer Night", "This Friday Night 9pm", R.drawable.beer)
-        val raptorEvent =
-            GroupEventItem("Raptors Game", "This Saturday 7:30 pm", R.drawable.raptors)
-        val hciGroup = GroupEventItem("HCI Study Group", "December 3rd 12:00pm", R.drawable.hci)
-
-        val beerNotification = Notification("Confirm Pickup", R.drawable.beer)
-        val raptorNotification = Notification("Vote on HCI Study Day", R.drawable.hci)
-        val HCINotification = Notification("All Riders Confirmed", R.drawable.raptors)
-
-        val groupEventItems = arrayListOf(beerEvent, raptorEvent, hciGroup)
-        val notifications = arrayListOf(beerNotification, raptorNotification, HCINotification)
-
         val nextItemVisiblePx = resources.getDimension(R.dimen.viewpager_next_item_visible)
-        val currentItemHorizontalMarginPx =
-            resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin)
+        val currentItemHorizontalMarginPx = resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin)
         val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
         val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
             page.translationX = -pageTranslationX * position
@@ -55,20 +40,21 @@ class MainFragment : Fragment() {
         val layoutManger = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         layoutManger.scrollToPosition(0)
 
+        val notificationAdapter = NotificationAdapter(NotificationsData.notifications)
+
         notificationList.apply {
             setHasFixedSize(true)
             layoutManager = layoutManger
-            adapter = NotificationAdapter(notifications)
+            adapter = notificationAdapter
         }
-        prepCarousel(pageTransformer, context, groupEventItems)
-        prepIcons(pageTransformer, context, groupEventItems)
+
+        prepCarousel(pageTransformer, context, CarouselData.widgets)
+        prepIcons(context, CarouselData.widgets)
 
         return layout
     }
 
-    fun prepIcons(
-        pageTransformer: ViewPager2.PageTransformer,
-        context: Context,
+    fun prepIcons(context: Context,
         items: ArrayList<GroupEventItem>) {
         val itemDecoration = HorizontalMarginItemDecoration(
             context,

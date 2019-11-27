@@ -1,5 +1,6 @@
 package com.example.timehunter
 
+import android.graphics.Color
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
@@ -31,15 +33,15 @@ class GroupAdapter (private val groups:ArrayList<Group>):
         val nameView: TextView
         val imageView: ImageView
         val summaryView : TextView
+        val sizeView : TextView
         val cardView: CardView
-        var manager: FragmentManager
 
         init {
             nameView = v.findViewById(R.id.name)
             summaryView = v.findViewById(R.id.summary)
+            sizeView = v.findViewById(R.id.size)
             imageView = v.findViewById(R.id.photo)
             cardView = v.findViewById(R.id.group_item)
-            manager = (v.context as FragmentActivity).supportFragmentManager
         }
     }
 
@@ -57,6 +59,17 @@ class GroupAdapter (private val groups:ArrayList<Group>):
         val group = groups[position]
         holder.imageView.setImageResource(group.icon)
         holder.nameView.text = group.name
+        holder.summaryView.text = group.summary
+        val sizeString = "${group.people.size} members"
+        holder.sizeView.text =   sizeString
+
+        if (position%2==0){
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.cardView.context,R.color.colorPrimaryLight))
+            holder.nameView.setTextColor(ContextCompat.getColor(holder.cardView.context,R.color.colorPrimaryDark))
+            holder.summaryView.setTextColor(ContextCompat.getColor(holder.cardView.context,R.color.colorPrimaryDark))
+            holder.sizeView.setTextColor(ContextCompat.getColor(holder.cardView.context,R.color.colorPrimaryDark))
+        }
+
         val a = ViewGroupFragment.newInstance(group).arguments
         holder.cardView.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.viewGroupFragment,a))
     }

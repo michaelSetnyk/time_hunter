@@ -49,14 +49,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
+        android:layout_margin="5dp"
         android:id="@+id/contacts_section"
         app:layout_constraintTop_toBottomOf="@id/header"
-        app:cardCornerRadius="20dp"
-        app:cardBackgroundColor="@color/colorPrimary"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:backgroundTint="@color/colorBackground"
             android:id="@+id/no_contacts"
             android:text="Your Group is Empty"
             android:textSize="30dp"
@@ -65,10 +66,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/contacts"
-            android:backgroundTint="@color/colorBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -110,34 +110,30 @@
                         android:textColor="@color/colorPrimaryDark" />
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/colorPrimary">
+                        android:layout_height="wrap_content">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="22sp"
-                            android:textAlignment="center"
-                            android:text="Upcoming Events" />
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:contentPadding="30dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="22sp"
+                                android:textAlignment="center"
+                                android:text="Upcoming Events" />
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/upcomingEvents"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
                             <TextView
+                                android:background="#FFFFFF"
                                 android:id="@+id/noEvents"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:padding="30dp"
                                 android:textSize="30sp"
                                 android:textAlignment="center"
                                 android:text="No Upcoming Events"/>
-                        </com.google.android.material.card.MaterialCardView>
                         </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
                     <com.prolificinteractive.materialcalendarview.MaterialCalendarView

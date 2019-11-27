@@ -8,11 +8,15 @@ object ContactsData{
 }
 // In an actual app this would be a database.
 // But we need some dummy data and a DB is too much work
+
 object GroupsData{
-    val hci_contacts= arrayListOf(ContactsData.one,ContactsData.three)
-    val uoit_contacts= ContactsData.contacts
-    private val hciGroup = Group("HCI","group to study HCI",R.drawable.hci, hci_contacts)
+    private val hci_contacts= arrayListOf(ContactsData.one,ContactsData.three)
+    private  val uoit_contacts= ContactsData.contacts
+    private val hci_event = arrayListOf(Group("HCI Study Date", "Vote on the HCI study date", icon = R.drawable.hci ))
+
+    private val hciGroup = Group("HCI","group to study HCI",R.drawable.hci, hci_contacts, events = hci_event)
     private val uoitGroup = Group("UOIT","Group from UOIT",R.drawable.uoit, uoit_contacts)
+
 
     var groups = arrayListOf(hciGroup, uoitGroup)
 }

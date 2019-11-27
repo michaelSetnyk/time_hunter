@@ -28,22 +28,14 @@ import java.lang.IllegalStateException
 class ViewGroupFragment : Fragment() {
 
     companion object {
-        private lateinit var GROUP :Group
-        const val ARG_NAME = "name"
-        const val ARG_ICON = "icon"
-        const val ARG_DESCRIPTION = "description"
-        const val ARG_USERS = "users"
+        const val ARG_GROUP = "GROUP"
 
         fun newInstance(group: Group): ViewGroupFragment {
-            GROUP = group
             val fragment = ViewGroupFragment()
-
             val bundle = Bundle().apply {
-                putString(ARG_NAME, group.name)
-                putInt(ARG_ICON, group.icon)
-                putString(ARG_DESCRIPTION, group.summary)
-                putParcelableArrayList(ARG_USERS, group.people)
+                putParcelable(ARG_GROUP,group)
             }
+
             fragment.arguments = bundle
             return fragment
         }
@@ -65,35 +57,39 @@ class ViewGroupFragment : Fragment() {
         val leaveButton = layout.findViewById<MaterialButton>(R.id.leave)
         val openContacts = layout.findViewById<MaterialButton>(R.id.open_contacts)
         val contactsDrawer = layout.findViewById<DrawerLayout>(R.id.contacts_drawer)
+        val noContactsView = layout.findViewById<TextView>(R.id.no_contacts)
+        val noEvents = layout.findViewById<TextView>(R.id.noEvents)
 
-        val icon = arguments?.getInt(ARG_ICON)
-        val title = arguments?.getString(ARG_NAME)
-        val description = arguments?.getString(ARG_DESCRIPTION)
-        var users = arguments?.getParcelableArrayList<User>(ARG_USERS)
+        val group = arguments!!.getParcelable<Group>(ARG_GROUP)
+        val icon =  group!!.icon
+        val title = group.name
+        val description = group.summary
+        val users = group.people
+        val events = group.events
 
-        if (icon != null) {
-            groupPhotoView.setImageResource(icon)
-        }
-        if (title != null) {
-            titleView.text = title
-        }
-        if (description != null) {
-            descriptionView.text = description
+        groupPhotoView.setImageResource(icon)
+        titleView.text = title
+        descriptionView.text = description
+
+        if (users.isEmpty()) {
+            noContactsView.visibility=View.VISIBLE
+        }else{
+            noContactsView.visibility=View.GONE
         }
 
-        if (users == null || users.isEmpty()) {
-            users = ArrayList<User>()
+        if (events.isEmpty()) {
+            noEvents.visibility=View.VISIBLE
+        }else{
+            noEvents.visibility=View.GONE
         }
 
         weekCalendarView.topbarVisible=false
 
         configureContacts(membersView,contactsListViewer, users)
 
-        val events = ArrayList<Group>()
         confiureEvents(eventsView, events)
 
         val fm = childFragmentManager
-
         calendarButton.setOnClickListener {
             val calendarFragment = CalendarDialog()
             calendarFragment.show(fm,"Calendar")
@@ -108,7 +104,7 @@ class ViewGroupFragment : Fragment() {
         }
 
         leaveButton.setOnClickListener {
-            GroupsData.groups.remove(GROUP)
+            GroupsData.groups.remove(group)
             findNavController().popBackStack()
         }
 
@@ -131,11 +127,6 @@ class ViewGroupFragment : Fragment() {
             layoutManager = contactsListManger
             adapter = UserListAdapter(contacts)
         }
-
-
-
-
-
     }
 
     fun confiureEvents(recyclerView: RecyclerView, events: ArrayList<Group>) {

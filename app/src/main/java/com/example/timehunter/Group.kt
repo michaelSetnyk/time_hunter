@@ -1,5 +1,6 @@
 package com.example.timehunter
 
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,17 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.parcel.Parcelize
 
 data class GroupEventItem(val title: String, val description:String, val iconId: Int)
-data class Group (val name: String, val summary: String, val icon :Int = R.drawable.ic_group_black_24dp, var people: ArrayList<User> = ArrayList<User>())
+
+// We should have an Event class but due to time group is fine
+@Parcelize
+data class Group (val name: String,
+                  val summary: String,
+                  val icon :Int = R.drawable.ic_group_black_24dp,
+                  var people: ArrayList<User> = ArrayList<User>(),
+                  var events: ArrayList<Group> = ArrayList<Group>()) :Parcelable
 
 class GroupAdapter (private val groups:ArrayList<Group>):
     RecyclerView.Adapter<GroupAdapter.GroupHolder>() {

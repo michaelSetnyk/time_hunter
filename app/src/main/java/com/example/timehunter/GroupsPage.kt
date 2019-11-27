@@ -16,11 +16,11 @@ class GroupsPage : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        println(GroupsData.groups.size)
         val layout = inflater.inflate(R.layout.fragment_groups_page, container, false)
         val groupsView = layout.findViewById<RecyclerView>(R.id.groups)
         val layoutManger = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
+        println(GroupsData.groups)
         groupsView.apply {
             setHasFixedSize(true)
             layoutManager = layoutManger

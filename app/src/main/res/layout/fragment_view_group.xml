@@ -49,28 +49,29 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_margin="5dp"
-        android:id="@+id/contacts_section"
-        app:layout_constraintTop_toBottomOf="@id/header"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:backgroundTint="@color/colorBackground"
-            android:id="@+id/no_contacts"
-            android:text="Your Group is Empty"
-            android:textSize="30dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:id="@+id/contacts_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/header">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/contacts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/no_contacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorBackground"
+                    android:text="Your Group is Empty"
+                    android:textSize="30dp" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/contacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout

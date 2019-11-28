@@ -37,6 +37,10 @@ class MainActivity :  AppCompatActivity() {
         navController.addOnDestinationChangedListener{_, dest, _ ->
             if (dest.id == R.id.createGroupFragment){
                 bottomNavigationView.visibility = View.GONE
+            }else if (dest.id == R.id.createGroupFragment2){
+                bottomNavigationView.visibility = View.GONE
+            }else if (dest.id == R.id.contactsPage){
+                bottomNavigationView.visibility = View.GONE
             }else{
                 bottomNavigationView.visibility = View.VISIBLE
             }

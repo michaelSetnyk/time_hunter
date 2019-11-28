@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:id="@+id/fragment_contacts_page"
+    tools:context=".GroupsPage">
+
+    <TextView
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="44dp"
+        android:text="Contacts" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/contact_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="419dp"
+        android:scrollbars="vertical" />
+
+    <Button
+        android:id="@+id/done_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DONE"/>
+
+
+</LinearLayout>

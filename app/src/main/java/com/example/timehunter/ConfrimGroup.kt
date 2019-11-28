@@ -2,6 +2,7 @@ package com.example.timehunter
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -16,9 +17,11 @@ class ConfrimGroup : AppCompatActivity(){
 
         val receiveName = findViewById<TextView>(R.id.confirm_group_name)
         val receiveDesc = findViewById<TextView>(R.id.confirm_group_desc)
-        val editButton = findViewById<TextView>(R.id.edit_text)
-        val cancelButton = findViewById<TextView>(R.id.cancel_action)
-        val createButton = findViewById<TextView>(R.id.create_text)
+        val editButton = findViewById<TextView>(R.id.edit_button)
+        val cancelButton = findViewById<TextView>(R.id.confirm_page_cancel_button)
+        val createButton = findViewById<TextView>(R.id.confirm_page_confirm_button)
+        val profile_text = findViewById<TextView>(R.id.profile_list_description2)
+        profile_text.setMovementMethod(ScrollingMovementMethod())
 
         val name = intent.getStringExtra("GroupName")
         val desc = intent.getStringExtra("GroupDesc")

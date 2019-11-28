@@ -24,10 +24,13 @@
         android:id="@+id/createGroupFragment"
         android:name="com.example.timehunter.CreateGroupFragment"
         android:label="create_group"
-        tools:layout="@layout/create_group" >
+        tools:layout="@layout/fragment_create_group" >
         <action
             android:id="@+id/action_createGroupFragment_to_viewGroupFragment"
             app:destination="@id/viewGroupFragment" />
+        <action
+            android:id="@+id/action_createGroupFragment_to_contactsPage"
+            app:destination="@id/contactsPage" />
     </fragment>
 
     <action android:id="@+id/action_global_mainFragment"
@@ -46,5 +49,30 @@
             android:id="@+id/action_viewGroupFragment_to_createGroupFragment"
             app:destination="@id/createGroupFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/contactsPage"
+        android:name="com.example.timehunter.ContactsPage"
+        android:label="ContactsPage" >
+        <action
+            android:id="@+id/action_contactsPage_to_createGroupFragment2"
+            app:destination="@id/createGroupFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/createGroupFragment2"
+        android:name="com.example.timehunter.CreateGroupFragment2"
+        android:label="fragment_create_group2"
+        tools:layout="@layout/fragment_create_group2" />
+    <navigation
+        android:id="@+id/navigation"
+        app:startDestination="@id/confrimGroup" >
+        <activity
+            android:id="@+id/confrimGroup"
+            android:name="com.example.timehunter.ConfrimGroup"
+            android:label="confirm_group"
+            tools:layout="@layout/confirm_group" />
+        <action
+            android:id="@+id/action_global_groupsPageFragment2"
+            app:destination="@id/groupsPageFragment" />
+    </navigation>
 
 </navigation>

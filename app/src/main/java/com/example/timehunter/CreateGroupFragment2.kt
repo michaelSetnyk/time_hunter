@@ -21,7 +21,11 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_create_group.*
 import android.widget.TextView
 import androidx.core.content.PermissionChecker.*
+import androidx.core.view.get
 import androidx.core.view.isVisible
+import kotlinx.android.synthetic.main.fragment_create_group.view.*
+import kotlinx.android.synthetic.main.fragment_groups_page.*
+import kotlinx.android.synthetic.main.group_item.view.*
 
 class CreateGroupFragment2 : Fragment() {
 
@@ -48,6 +52,8 @@ class CreateGroupFragment2 : Fragment() {
         val contactAddButton = layout.findViewById<Button>(R.id.add_contact_button)
         val profile_text = layout.findViewById<TextView>(R.id.profile_list_description)
         profile_text.setMovementMethod(ScrollingMovementMethod())
+        groupNameText.hint = GroupsData.groups[2].summary
+
 
         val context = requireContext()
 

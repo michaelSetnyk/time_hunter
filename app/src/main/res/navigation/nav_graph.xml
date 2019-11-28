@@ -62,17 +62,5 @@
         android:name="com.example.timehunter.CreateGroupFragment2"
         android:label="fragment_create_group2"
         tools:layout="@layout/fragment_create_group2" />
-    <navigation
-        android:id="@+id/navigation"
-        app:startDestination="@id/confrimGroup" >
-        <activity
-            android:id="@+id/confrimGroup"
-            android:name="com.example.timehunter.ConfrimGroup"
-            android:label="confirm_group"
-            tools:layout="@layout/confirm_group" />
-        <action
-            android:id="@+id/action_global_groupsPageFragment2"
-            app:destination="@id/groupsPageFragment" />
-    </navigation>
 
 </navigation>

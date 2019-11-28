@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -31,7 +33,13 @@ class ContactsPage : Fragment() {
         val contactsView = layout.findViewById<RecyclerView>(R.id.contact_recycler)
         val layoutManger = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val confirm = layout.findViewById<Button>(R.id.done_button)
-        confirm.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.createGroupFragment2))
+        val contactChecked = layout.findViewById<CheckBox>(R.id.contact_check)
+        val contactName = layout.findViewById<TextView>(R.id.name)
+
+        confirm.setOnClickListener{
+            val navController = findNavController()
+            navController.popBackStack()
+        }
 
         contactsView.apply {
             setHasFixedSize(true)

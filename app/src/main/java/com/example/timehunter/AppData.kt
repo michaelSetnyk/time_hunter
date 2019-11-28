@@ -18,6 +18,10 @@ object ContactsData{
 // In an actual app this would be a database.
 // But we need some dummy data and a DB is too much work
 
+object ContactList{
+    var contacts = arrayListOf<String>()
+}
+
 object GroupsData{
     private val hci_contacts= arrayListOf(ContactsData.one,ContactsData.twelve)
     private  val uoit_contacts= ContactsData.contacts

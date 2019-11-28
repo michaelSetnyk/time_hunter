@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_create_group.*
 import android.widget.TextView
 import androidx.core.content.PermissionChecker.*
 import androidx.core.view.isVisible
+import com.example.timehunter.GroupsData.groups
 
 class CreateGroupFragment : Fragment() {
 
@@ -45,13 +46,17 @@ class CreateGroupFragment : Fragment() {
         val groupNameText = layout.findViewById<EditText>(R.id.group_name)
         val groupDescText = layout.findViewById<EditText>(R.id.group_description1)
         val contactAddButton = layout.findViewById<Button>(R.id.add_contact_button)
+        val contactList = layout.findViewById<TextView>(R.id.contactList)
+        val importButton = layout.findViewById<Button>(R.id.import_contact_button)
 
         val context = requireContext()
 
         (activity as MainActivity).supportActionBar?.title = "Create Group"
+        contactList.setText(ContactList.contacts.toString())
 
 
         confirm.setOnClickListener{
+            val group = Group(groupName.toString(), groupDesc.toString())
             val intent = Intent(context, ConfrimGroup::class.java)
             intent.putExtra("GroupName", groupName)
             intent.putExtra("GroupDesc", groupDesc)
@@ -86,16 +91,16 @@ class CreateGroupFragment : Fragment() {
 
         contactAddButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.contactsPage))
 
-        /*contactAddButton.setOnClickListener{
+        importButton.setOnClickListener{
 
-            /*if (checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_DENIED){
+            if (checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PERMISSION_DENIED){
                 val permissions = arrayOf(Manifest.permission.READ_CONTACTS)
                 requestPermissions(permissions, CONTACT_PERMISSION_CODE)
             } else {
                 contactPicker()
-            }*/
+            }
 
-        }*/
+        }
 
         groupNameText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable){

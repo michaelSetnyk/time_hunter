@@ -33,8 +33,6 @@ class ContactsPage : Fragment() {
         val contactsView = layout.findViewById<RecyclerView>(R.id.contact_recycler)
         val layoutManger = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val confirm = layout.findViewById<Button>(R.id.done_button)
-        val contactChecked = layout.findViewById<CheckBox>(R.id.contact_check)
-        val contactName = layout.findViewById<TextView>(R.id.name)
 
         confirm.setOnClickListener{
             val navController = findNavController()

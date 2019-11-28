@@ -52,7 +52,7 @@ class CreateGroupFragment : Fragment() {
         val context = requireContext()
 
         (activity as MainActivity).supportActionBar?.title = "Create Group"
-        contactList.setText(ContactList.contacts.toString())
+        contactList.setText("Contacts: " + ContactList.contacts.toString())
 
 
         confirm.setOnClickListener{

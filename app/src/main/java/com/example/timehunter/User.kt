@@ -4,6 +4,7 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +33,14 @@ class UserListAdapter (private val users:ArrayList<User>):
     ): UserHolder {
         val layout =
             LayoutInflater.from(parent.context).inflate(R.layout.user_item, parent, false)
+        val contactChecked = layout.findViewById<CheckBox>(R.id.contact_check)
+        val contactName = layout.findViewById<TextView>(R.id.name)
+        val contactImage = layout.findViewById<CircleImageView>(R.id.photo)
+        val listOfContacts = ContactList.contacts
+
+        contactChecked.setOnClickListener{
+            listOfContacts.add(contactName.text.toString())
+        }
 
         return UserHolder(layout)
     }

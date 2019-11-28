@@ -11,22 +11,6 @@
 
 
     <TextView
-        android:id="@+id/profile_list_description2"
-        android:layout_width="414dp"
-        android:layout_height="40dp"
-        android:maxLines="4"
-        android:scrollbars="vertical"
-        android:text="4 Members Added \n Bobby Flethcher \n Dottie Bruce \n Allisa Lin \n Will Logan"
-        android:textColor="@color/colorPrimary"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.649" />
-
-    <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -145,16 +129,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.815" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="392dp"
-        android:layout_height="195dp"
+    <TextView
+        android:id="@+id/contactList"
+        android:layout_width="311dp"
+        android:layout_height="111dp"
+        android:text="TextView"
+        android:textColor="@color/colorPrimary"
+        android:textSize="22dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.534"
-        app:srcCompat="@mipmap/profile_lisit_foreground" />
+        app:layout_constraintVertical_bias="0.576" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

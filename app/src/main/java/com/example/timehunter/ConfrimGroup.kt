@@ -20,8 +20,10 @@ class ConfrimGroup : AppCompatActivity(){
         val editButton = findViewById<TextView>(R.id.edit_button)
         val cancelButton = findViewById<TextView>(R.id.confirm_page_cancel_button)
         val createButton = findViewById<TextView>(R.id.confirm_page_confirm_button)
-        val profile_text = findViewById<TextView>(R.id.profile_list_description2)
-        profile_text.setMovementMethod(ScrollingMovementMethod())
+        val contactList = findViewById<TextView>(R.id.contactList)
+
+        contactList.setText("Contacts: " + ContactList.contacts.toString())
+
 
         val name = intent.getStringExtra("GroupName")
         val desc = intent.getStringExtra("GroupDesc")

@@ -2,23 +2,24 @@ package com.example.timehunter
 
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import de.hdodenhof.circleimageview.CircleImageView
@@ -41,6 +42,8 @@ class ViewGroupFragment : Fragment() {
         }
     }
 
+    private lateinit var group: Group
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,14 +57,20 @@ class ViewGroupFragment : Fragment() {
         val contactsListViewer = layout.findViewById<RecyclerView>(R.id.contacts_list)
         val calendarButton = layout.findViewById<MaterialButton>(R.id.calendarButton)
         val weekCalendarView = layout.findViewById<MaterialCalendarView>(R.id.weekCalendarView)
-        val leaveButton = layout.findViewById<MaterialButton>(R.id.leave)
         val openContacts = layout.findViewById<MaterialButton>(R.id.open_contacts)
+        val openOptions = layout.findViewById<MaterialButton>(R.id.open_options)
         val contactsDrawer = layout.findViewById<DrawerLayout>(R.id.contacts_drawer)
         val noContactsView = layout.findViewById<TextView>(R.id.no_contacts)
         val noEvents = layout.findViewById<TextView>(R.id.noEvents)
+        val addContactButton = layout.findViewById<FloatingActionButton>(R.id.add_contact_floating)
 
-        val group = arguments!!.getParcelable<Group>(ARG_GROUP)
-        val icon =  group!!.icon
+        val contactsNavigationView = layout.findViewById<NavigationView>(R.id.contactsNavigationView)
+        val contactsHeaderLayout = contactsNavigationView.getHeaderView(0)
+        val addContactDrawerButton = contactsHeaderLayout.findViewById<FloatingActionButton>(R.id.add_contact)
+
+
+        group = arguments!!.getParcelable<Group>(ARG_GROUP) as Group
+        val icon =  group.icon
         val title = group.name
         val description = group.summary
         val users = group.people
@@ -70,6 +79,7 @@ class ViewGroupFragment : Fragment() {
         groupPhotoView.setImageResource(icon)
         titleView.text = title
         descriptionView.text = description
+        weekCalendarView.topbarVisible=false
 
         if (users.isEmpty()) {
             noContactsView.visibility=View.VISIBLE
@@ -83,10 +93,8 @@ class ViewGroupFragment : Fragment() {
             noEvents.visibility=View.GONE
         }
 
-        weekCalendarView.topbarVisible=false
-
+        // Configure the events and contacts icons and drawer adapters
         configureContacts(membersView,contactsListViewer, users)
-
         confiureEvents(eventsView, events)
 
         val fm = childFragmentManager
@@ -103,17 +111,40 @@ class ViewGroupFragment : Fragment() {
             }
         }
 
-        leaveButton.setOnClickListener {
-            GroupsData.groups.remove(group)
-            findNavController().popBackStack()
+
+        val popup = PopupMenu(openOptions.context,openOptions)
+        openOptions.setOnClickListener {
+            popup.menuInflater.inflate(R.menu.viewgroup_contacts_options, popup.menu)
+            popup.show()
         }
+
+        popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
+                println("Item selected")
+                when (it.itemId) {
+                    R.id.menu_leave -> {
+                        println("Item leave selected")
+                        GroupsData.groups.remove(group)
+                        findNavController().popBackStack()
+                        false
+                    }
+                    R.id.menu_edit -> {
+                        true
+                    }
+                    else -> super.onOptionsItemSelected(it)
+                }
+            }
+        )
+
+        // This may be time permitting
+        //addContactButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.add_contact,FragArgs))
 
         return layout
     }
 
 
 
-    fun configureContacts(iconsViewer: RecyclerView, contactsList: RecyclerView, contacts: ArrayList<User>) {
+
+fun configureContacts(iconsViewer: RecyclerView, contactsList: RecyclerView, contacts: ArrayList<User>) {
         val layoutManger = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         iconsViewer.apply {
             setHasFixedSize(true)
@@ -149,10 +180,7 @@ class CalendarDialog : DialogFragment() {
             builder.create()
         } ?: throw IllegalStateException("Activity Cannot be Null")
     }
-
-
 }
-
 
 // This should be an event but  group event items have the layout we need
 // No interaction on this part

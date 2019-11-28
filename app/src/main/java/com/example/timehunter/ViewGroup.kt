@@ -168,7 +168,7 @@ class EventDecorator(val context: Context, dates:ArrayList<CalendarDay>): DayVie
 
     override fun decorate(view: DayViewFacade) {
         val event = ContextCompat.getDrawable(context,R.drawable.ic_event_black_24dp) as Drawable
-        view.set
+
     }
 }
 

@@ -4,11 +4,13 @@ package com.example.timehunter
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
@@ -21,10 +23,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.DayViewDecorator
+import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.format.WeekDayFormatter
+import com.prolificinteractive.materialcalendarview.spans.DotSpan
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.fragment_carousel_calendar.*
 import kotlinx.android.synthetic.main.fragment_view_group.view.*
 import java.lang.IllegalStateException
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 
 class ViewGroupFragment : Fragment() {
 
@@ -68,7 +81,7 @@ class ViewGroupFragment : Fragment() {
         val contactsHeaderLayout = contactsNavigationView.getHeaderView(0)
         val addContactDrawerButton = contactsHeaderLayout.findViewById<FloatingActionButton>(R.id.add_contact)
 
-
+        val context = requireContext()
         group = arguments!!.getParcelable<Group>(ARG_GROUP) as Group
         val icon =  group.icon
         val title = group.name
@@ -80,6 +93,11 @@ class ViewGroupFragment : Fragment() {
         titleView.text = title
         descriptionView.text = description
         weekCalendarView.topbarVisible=false
+
+        val today : CalendarDay= weekCalendarView.currentDate
+
+        val calendarDay = arrayListOf(today)
+        weekCalendarView.addDecorator(EventDecorator(context,calendarDay))
 
         if (users.isEmpty()) {
             noContactsView.visibility=View.VISIBLE
@@ -118,11 +136,9 @@ class ViewGroupFragment : Fragment() {
             popup.show()
         }
 
-        popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
-                println("Item selected")
+        popup.setOnMenuItemClickListener{
                 when (it.itemId) {
                     R.id.menu_leave -> {
-                        println("Item leave selected")
                         GroupsData.groups.remove(group)
                         findNavController().popBackStack()
                         false
@@ -133,8 +149,6 @@ class ViewGroupFragment : Fragment() {
                     else -> super.onOptionsItemSelected(it)
                 }
             }
-        )
-
         // This may be time permitting
         //addContactButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.add_contact,FragArgs))
 
@@ -142,6 +156,21 @@ class ViewGroupFragment : Fragment() {
     }
 
 
+class EventDecorator(val context: Context, dates:ArrayList<CalendarDay>): DayViewDecorator {
+    private var dates: HashSet<CalendarDay>
+    init {
+        this.dates = HashSet(dates)
+    }
+
+    override fun shouldDecorate(day: CalendarDay) :Boolean{
+        return dates.contains(day)
+    }
+
+    override fun decorate(view: DayViewFacade) {
+        val event = ContextCompat.getDrawable(context,R.drawable.ic_event_black_24dp) as Drawable
+        view.set
+    }
+}
 
 
 fun configureContacts(iconsViewer: RecyclerView, contactsList: RecyclerView, contacts: ArrayList<User>) {

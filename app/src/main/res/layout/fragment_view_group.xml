@@ -103,9 +103,7 @@
                     app:cardBackgroundColor="@color/colorBackground"
                     android:background="@color/colorBackground"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -145,23 +143,24 @@
                                     android:text="No Upcoming Events"/>
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
-                    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-                        android:id="@+id/weekCalendarView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorPrimary"
-                        app:mcv_selectionColor="@color/colorPrimaryDark"
-                        app:mcv_selectionMode="none"
-                        app:mcv_calendarMode="week"
-                        app:mcv_showWeekDays="true"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
+                <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                    android:id="@+id/weekCalendarView"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="0dp"
+                    android:background="@color/colorPrimary"
+                    app:mcv_selectionColor="@color/colorPrimaryDark"
+                    app:mcv_selectionMode="none"
+                    app:mcv_calendarMode="week"
+                    app:mcv_showWeekDays="true"/>
             </LinearLayout>
         </LinearLayout>
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/contactsNavigationView"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:fitsSystemWindows="true"
             app:headerLayout="@layout/group_contacts_header">

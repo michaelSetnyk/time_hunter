@@ -189,10 +189,10 @@
     <TextView
         android:id="@+id/profile_list_description"
         android:layout_width="179dp"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         android:maxLines="3"
         android:scrollbars="vertical"
-        android:text="4 Members Added \n Bobby Flethcher \n Dottie Bruce \n Allisa Lin \ Will Logan"
+        android:text="4 Members Added \n Bobby Flethcher \n Dottie Bruce \n Allisa Lin \n Will Logan"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

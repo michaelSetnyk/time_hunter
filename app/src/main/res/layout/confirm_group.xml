@@ -14,7 +14,7 @@
         android:id="@+id/profile_list_description2"
         android:layout_width="414dp"
         android:layout_height="40dp"
-        android:maxLines="2"
+        android:maxLines="4"
         android:scrollbars="vertical"
         android:text="4 Members Added \n Bobby Flethcher \n Dottie Bruce \n Allisa Lin \n Will Logan"
         android:textColor="@color/colorPrimary"

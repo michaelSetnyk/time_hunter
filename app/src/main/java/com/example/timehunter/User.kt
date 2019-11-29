@@ -4,7 +4,9 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
+import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.RecyclerView
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.parcel.Parcelize
@@ -31,6 +33,21 @@ class UserListAdapter (private val users:ArrayList<User>):
     ): UserHolder {
         val layout =
             LayoutInflater.from(parent.context).inflate(R.layout.user_item, parent, false)
+        val contactChecked = layout.findViewById<CheckBox>(R.id.contact_check)
+        val contactName = layout.findViewById<TextView>(R.id.name)
+        val contactImage = layout.findViewById<CircleImageView>(R.id.photo)
+        val listOfContacts = GroupContacts.contacts
+
+
+        contactChecked.setOnClickListener {
+            for(contact in ContactsData.contacts){
+                if(contact.name == contactName.text){
+                    GroupContacts.contacts.add(contact)
+                }
+            }
+        }
+
+
 
         return UserHolder(layout)
     }
@@ -42,4 +59,6 @@ class UserListAdapter (private val users:ArrayList<User>):
     }
 
     override fun getItemCount() = users.size
+
+
 }

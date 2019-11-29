@@ -1,16 +1,31 @@
 package com.example.timehunter
 
 object ContactsData{
-    val one = User("Person A")
-    val two = User("Person B")
-    val three =User("Person C")
-    var contacts = arrayListOf(one,two,three)
+    val one = User("Alex Adams",  R.mipmap.p1 )
+    val two = User("Allisa Lin", R.mipmap.p2)
+    val three = User("Big sis", R.mipmap.p3)
+    val four = User("Bobby Fletcher", R.mipmap.p4)
+    val five = User("Dad", R.mipmap.p5)
+    val six = User("Dottie Bruce", R.mipmap.p6)
+    val seven = User("Jenna Corine", R.mipmap.p7)
+    val eight =User("leatrice tory", R.mipmap.p8)
+    val nine = User("Momma Bear", R.mipmap.p9)
+    val ten = User("Steven Calahone", R.mipmap.p10)
+    val eleven = User("Thompson Torioni", R.mipmap.p11)
+    val twelve =User("Will Logan", R.mipmap.p12)
+    var contacts = arrayListOf(one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve)
 }
 // In an actual app this would be a database.
 // But we need some dummy data and a DB is too much work
 
+
+
+object GroupContacts{
+    var contacts = ArrayList<User>()
+}
+
 object GroupsData{
-    private val hci_contacts= arrayListOf(ContactsData.one,ContactsData.three)
+    private val hci_contacts= arrayListOf(ContactsData.one,ContactsData.twelve)
     private  val uoit_contacts= ContactsData.contacts
     private val hci_event = arrayListOf(Group("HCI Study Date", "Vote on the HCI study date", icon = R.drawable.hci ))
 

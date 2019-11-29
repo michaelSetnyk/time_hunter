@@ -2,11 +2,7 @@ package com.example.timehunter
 
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.TextView
-import android.widget.Toast
-import android.widget.ImageButton
 import android.Manifest
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -17,12 +13,15 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.core.content.PermissionChecker.checkSelfPermission
+import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.create_group.*
-
+import kotlinx.android.synthetic.main.fragment_create_group.*
+import android.widget.TextView
+import androidx.core.content.PermissionChecker.*
+import androidx.core.view.isVisible
+import com.example.timehunter.GroupsData.groups
 
 class CreateGroupFragment : Fragment() {
 
@@ -40,39 +39,31 @@ class CreateGroupFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val layout = inflater.inflate(R.layout.create_group, container, false)
-        val cancelAction = layout.findViewById<TextView>(R.id.cancel_action)
-        val confirm = layout.findViewById<TextView>(R.id.confirm_text)
+        val layout = inflater.inflate(R.layout.fragment_create_group, container, false)
+        val cancelAction = layout.findViewById<TextView>(R.id.cancel_button)
+        val confirm = layout.findViewById<TextView>(R.id.confirm_button)
         val groupPhotoButton = layout.findViewById<ImageButton>(R.id.groupPhotoAdd)
         val groupNameText = layout.findViewById<EditText>(R.id.group_name)
         val groupDescText = layout.findViewById<EditText>(R.id.group_description1)
-        val contactAddButton = layout.findViewById<ImageButton>(R.id.add_contact)
+        val contactAddButton = layout.findViewById<Button>(R.id.add_contact_button)
+        val contactList = layout.findViewById<TextView>(R.id.contactList)
+        val importButton = layout.findViewById<Button>(R.id.import_contact_button)
 
         val context = requireContext()
 
+        (activity as MainActivity).supportActionBar?.title = "Create Group"
+        contactList.setText("Group Members \n")
+        for(contact in GroupContacts.contacts){
+            contactList.append(contact.name + "\n")
+        }
+
+
+
         confirm.setOnClickListener{
-            val intent = Intent(context, ConfrimGroup::class.java)
-            intent.putExtra("GroupName", groupName)
-            intent.putExtra("GroupDesc", groupDesc)
-            startActivity(intent)
-        }
-
-        groupPhotoButton.setOnClickListener {
-            if (checkSelfPermission(context,Manifest.permission.READ_EXTERNAL_STORAGE) ==  PackageManager.PERMISSION_DENIED){
-                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-                requestPermissions(permissions, PHOTO_PERMISSION_CODE)
-            } else {
-                pickImageFromGallery()
-            }
-        }
-
-        contactAddButton.setOnClickListener{
-            if (checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_DENIED){
-                val permissions = arrayOf(Manifest.permission.READ_CONTACTS)
-                requestPermissions(permissions, CONTACT_PERMISSION_CODE)
-            } else {
-                contactPicker()
-            }
+            val group = Group(groupName.toString(), groupDesc.toString(),R.drawable.ic_group_black_24dp, GroupContacts.contacts)
+            groups.add(group)
+            val navController = findNavController()
+            navController.navigate(R.id.confrimGroup)
         }
 
         cancelAction.setOnClickListener{
@@ -82,14 +73,40 @@ class CreateGroupFragment : Fragment() {
                 .setPositiveButton("Delete", DialogInterface.OnClickListener(){_,_ ->
                     //We can add people in a sec
                     val navController = findNavController()
-                        navController.popBackStack()
+                    navController.popBackStack()
                 })
-                .setNeutralButton("Continue Creating Group", DialogInterface.OnClickListener(){
-                        dialog, id ->  dialog.cancel()
-                })
+                //.setNeutralButton("Continue Creating Group", DialogInterface.OnClickListener(){
+                      //  dialog, id ->  dialog.cancel()
+               // })
             val alert = dialogBuilder.create()
             alert.setTitle("Cancel")
             alert.show()
+        }
+
+        groupPhotoButton.setOnClickListener {
+            if (checkSelfPermission(context,Manifest.permission.READ_EXTERNAL_STORAGE) ==  PERMISSION_DENIED){
+                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                requestPermissions(permissions, PHOTO_PERMISSION_CODE)
+            } else {
+                pickImageFromGallery()
+            }
+        }
+
+        contactAddButton.setOnClickListener{
+
+            val navController = findNavController()
+            navController.navigate(R.id.contactsPage2)
+        }
+
+        importButton.setOnClickListener{
+
+            if (checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PERMISSION_DENIED){
+                val permissions = arrayOf(Manifest.permission.READ_CONTACTS)
+                requestPermissions(permissions, CONTACT_PERMISSION_CODE)
+            } else {
+                contactPicker()
+            }
+
         }
 
         groupNameText.addTextChangedListener(object : TextWatcher {
@@ -141,7 +158,6 @@ class CreateGroupFragment : Fragment() {
         startActivityForResult(intent, CONTACT_PERMISSION_CODE)
 
     }
-
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         val context = requireContext()

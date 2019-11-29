@@ -61,7 +61,7 @@ class ConfrimGroup : Fragment(){
             val newContactList = ArrayList<User>()
             ContactsData.contacts = newContactList
             val a = ViewGroupFragment.newInstance(GroupsData.groups[GroupsData.groups.size - 1]).arguments
-            navController.navigate(R.id.viewGroupFragment,a)
+            navController.navigate(R.id.action_confrimGroup_to_viewGroupFragment, a)
         }
 
         return layout

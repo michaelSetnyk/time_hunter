@@ -53,7 +53,9 @@
         android:label="ViewGroupFragment" >
         <action
             android:id="@+id/action_viewGroupFragment_to_createGroupFragment"
-            app:destination="@id/createGroupFragment" />
+            app:destination="@id/createGroupFragment"
+            app:popUpTo="@+id/groupsPageFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/confrimGroup"
@@ -63,6 +65,11 @@
         <action
             android:id="@+id/action_confrimGroup_to_groupsPageFragment"
             app:destination="@id/groupsPageFragment" />
+        <action
+            android:id="@+id/action_confrimGroup_to_viewGroupFragment"
+            app:destination="@id/viewGroupFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/contactsPage2"

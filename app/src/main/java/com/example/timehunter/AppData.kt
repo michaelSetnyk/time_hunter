@@ -8,7 +8,7 @@ object ContactsData{
     val five = User("Dad", R.mipmap.p5)
     val six = User("Dottie Bruce", R.mipmap.p6)
     val seven = User("Jenna Corine", R.mipmap.p7)
-    val eight =User("leatrice tory", R.mipmap.p8)
+    val eight =User("Leatrice Tory", R.mipmap.p8)
     val nine = User("Momma Bear", R.mipmap.p9)
     val ten = User("Steven Calahone", R.mipmap.p10)
     val eleven = User("Thompson Torioni", R.mipmap.p11)

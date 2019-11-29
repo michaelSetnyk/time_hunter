@@ -2,28 +2,42 @@ package com.example.timehunter
 
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.DayViewDecorator
+import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.format.WeekDayFormatter
+import com.prolificinteractive.materialcalendarview.spans.DotSpan
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.fragment_carousel_calendar.*
 import kotlinx.android.synthetic.main.fragment_view_group.view.*
 import java.lang.IllegalStateException
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 
 class ViewGroupFragment : Fragment() {
 
@@ -41,6 +55,8 @@ class ViewGroupFragment : Fragment() {
         }
     }
 
+    private lateinit var group: Group
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,14 +70,20 @@ class ViewGroupFragment : Fragment() {
         val contactsListViewer = layout.findViewById<RecyclerView>(R.id.contacts_list)
         val calendarButton = layout.findViewById<MaterialButton>(R.id.calendarButton)
         val weekCalendarView = layout.findViewById<MaterialCalendarView>(R.id.weekCalendarView)
-        val leaveButton = layout.findViewById<MaterialButton>(R.id.leave)
         val openContacts = layout.findViewById<MaterialButton>(R.id.open_contacts)
+        val openOptions = layout.findViewById<MaterialButton>(R.id.open_options)
         val contactsDrawer = layout.findViewById<DrawerLayout>(R.id.contacts_drawer)
         val noContactsView = layout.findViewById<TextView>(R.id.no_contacts)
         val noEvents = layout.findViewById<TextView>(R.id.noEvents)
+        val addContactButton = layout.findViewById<FloatingActionButton>(R.id.add_contact_floating)
 
-        val group = arguments!!.getParcelable<Group>(ARG_GROUP)
-        val icon =  group!!.icon
+        val contactsNavigationView = layout.findViewById<NavigationView>(R.id.contactsNavigationView)
+        val contactsHeaderLayout = contactsNavigationView.getHeaderView(0)
+        val addContactDrawerButton = contactsHeaderLayout.findViewById<FloatingActionButton>(R.id.add_contact)
+
+        val context = requireContext()
+        group = arguments!!.getParcelable<Group>(ARG_GROUP) as Group
+        val icon =  group.icon
         val title = group.name
         val description = group.summary
         val users = group.people
@@ -70,6 +92,12 @@ class ViewGroupFragment : Fragment() {
         groupPhotoView.setImageResource(icon)
         titleView.text = title
         descriptionView.text = description
+        weekCalendarView.topbarVisible=false
+
+        val today : CalendarDay= weekCalendarView.currentDate
+
+        val calendarDay = arrayListOf(today)
+        weekCalendarView.addDecorator(EventDecorator(context,calendarDay))
 
         if (users.isEmpty()) {
             noContactsView.visibility=View.VISIBLE
@@ -83,10 +111,8 @@ class ViewGroupFragment : Fragment() {
             noEvents.visibility=View.GONE
         }
 
-        weekCalendarView.topbarVisible=false
-
+        // Configure the events and contacts icons and drawer adapters
         configureContacts(membersView,contactsListViewer, users)
-
         confiureEvents(eventsView, events)
 
         val fm = childFragmentManager
@@ -103,17 +129,51 @@ class ViewGroupFragment : Fragment() {
             }
         }
 
-        leaveButton.setOnClickListener {
-            GroupsData.groups.remove(group)
-            findNavController().popBackStack()
+
+        val popup = PopupMenu(openOptions.context,openOptions)
+        openOptions.setOnClickListener {
+            popup.menuInflater.inflate(R.menu.viewgroup_contacts_options, popup.menu)
+            popup.show()
         }
+
+        popup.setOnMenuItemClickListener{
+                when (it.itemId) {
+                    R.id.menu_leave -> {
+                        GroupsData.groups.remove(group)
+                        findNavController().popBackStack()
+                        false
+                    }
+                    R.id.menu_edit -> {
+                        true
+                    }
+                    else -> super.onOptionsItemSelected(it)
+                }
+            }
+        // This may be time permitting
+        //addContactButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.add_contact,FragArgs))
 
         return layout
     }
 
 
+class EventDecorator(val context: Context, dates:ArrayList<CalendarDay>): DayViewDecorator {
+    private var dates: HashSet<CalendarDay>
+    init {
+        this.dates = HashSet(dates)
+    }
 
-    fun configureContacts(iconsViewer: RecyclerView, contactsList: RecyclerView, contacts: ArrayList<User>) {
+    override fun shouldDecorate(day: CalendarDay) :Boolean{
+        return dates.contains(day)
+    }
+
+    override fun decorate(view: DayViewFacade) {
+        val event = ContextCompat.getDrawable(context,R.drawable.ic_event_black_24dp) as Drawable
+
+    }
+}
+
+
+fun configureContacts(iconsViewer: RecyclerView, contactsList: RecyclerView, contacts: ArrayList<User>) {
         val layoutManger = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         iconsViewer.apply {
             setHasFixedSize(true)
@@ -149,10 +209,7 @@ class CalendarDialog : DialogFragment() {
             builder.create()
         } ?: throw IllegalStateException("Activity Cannot be Null")
     }
-
-
 }
-
 
 // This should be an event but  group event items have the layout we need
 // No interaction on this part

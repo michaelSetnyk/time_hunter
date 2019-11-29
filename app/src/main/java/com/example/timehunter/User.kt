@@ -36,11 +36,18 @@ class UserListAdapter (private val users:ArrayList<User>):
         val contactChecked = layout.findViewById<CheckBox>(R.id.contact_check)
         val contactName = layout.findViewById<TextView>(R.id.name)
         val contactImage = layout.findViewById<CircleImageView>(R.id.photo)
-        val listOfContacts = ContactList.contacts
+        val listOfContacts = GroupContacts.contacts
 
-        contactChecked.setOnClickListener{
-            listOfContacts.add(contactName.text.toString())
+
+        contactChecked.setOnClickListener {
+            for(contact in ContactsData.contacts){
+                if(contact.name == contactName.text){
+                    GroupContacts.contacts.add(contact)
+                }
+            }
         }
+
+
 
         return UserHolder(layout)
     }

@@ -18,8 +18,10 @@ object ContactsData{
 // In an actual app this would be a database.
 // But we need some dummy data and a DB is too much work
 
-object ContactList{
-    var contacts = arrayListOf<String>()
+
+
+object GroupContacts{
+    var contacts = ArrayList<User>()
 }
 
 object GroupsData{

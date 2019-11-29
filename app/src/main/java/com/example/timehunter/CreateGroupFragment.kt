@@ -52,15 +52,18 @@ class CreateGroupFragment : Fragment() {
         val context = requireContext()
 
         (activity as MainActivity).supportActionBar?.title = "Create Group"
-        contactList.setText("Contacts: " + ContactList.contacts.toString())
+        contactList.setText("Group Members \n")
+        for(contact in GroupContacts.contacts){
+            contactList.append(contact.name + "\n")
+        }
+
 
 
         confirm.setOnClickListener{
-            val group = Group(groupName.toString(), groupDesc.toString())
-            val intent = Intent(context, ConfrimGroup::class.java)
-            intent.putExtra("GroupName", groupName)
-            intent.putExtra("GroupDesc", groupDesc)
-            startActivity(intent)
+            val group = Group(groupName.toString(), groupDesc.toString(),R.drawable.ic_group_black_24dp, GroupContacts.contacts)
+            groups.add(group)
+            val navController = findNavController()
+            navController.navigate(R.id.confrimGroup)
         }
 
         cancelAction.setOnClickListener{
@@ -72,9 +75,9 @@ class CreateGroupFragment : Fragment() {
                     val navController = findNavController()
                     navController.popBackStack()
                 })
-                .setNeutralButton("Continue Creating Group", DialogInterface.OnClickListener(){
-                        dialog, id ->  dialog.cancel()
-                })
+                //.setNeutralButton("Continue Creating Group", DialogInterface.OnClickListener(){
+                      //  dialog, id ->  dialog.cancel()
+               // })
             val alert = dialogBuilder.create()
             alert.setTitle("Cancel")
             alert.show()
@@ -89,7 +92,11 @@ class CreateGroupFragment : Fragment() {
             }
         }
 
-        contactAddButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.contactsPage))
+        contactAddButton.setOnClickListener{
+
+            val navController = findNavController()
+            navController.navigate(R.id.contactsPage2)
+        }
 
         importButton.setOnClickListener{
 

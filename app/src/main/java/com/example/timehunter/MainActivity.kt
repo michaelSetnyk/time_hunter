@@ -38,17 +38,15 @@ class MainActivity :  AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
         navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener{_, dest, _ ->
-            if (dest.id == R.id.createGroupFragment){
-                bottomNavigationView.visibility = View.GONE
-            }else if (dest.id == R.id.fragment_contacts_page){
-                bottomNavigationView.visibility = View.GONE
-            }else if (dest.id == R.id.confrimGroup){
+            if (dest.id == R.id.createGroupFragment ||
+                dest.id == R.id.fragment_contacts_page ||
+                dest.id == R.id.confrimGroup ||
+                dest.id == R.id.contactsPage2){
                 bottomNavigationView.visibility = View.GONE
             }else{
                 bottomNavigationView.visibility = View.VISIBLE
             }
 
-            toolbar.title=""
         }
 
     }

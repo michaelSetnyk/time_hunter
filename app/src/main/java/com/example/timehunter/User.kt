@@ -14,16 +14,17 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class User (val name:String, val photo :Int = R.drawable.male_placeholder): Parcelable
 
-class UserListAdapter (private val users:ArrayList<User>):
-    RecyclerView.Adapter<UserListAdapter.UserHolder>() {
+class UserListAdapter (val group: Group, private val contacts :ArrayList<User>? = null ):RecyclerView.Adapter<UserListAdapter.UserHolder>() {
 
     class UserHolder(v: View) : RecyclerView.ViewHolder(v) {
         val photoView: CircleImageView
+        val checkBox : CheckBox
         val nameView: TextView
 
         init {
             photoView = v.findViewById(R.id.photo)
             nameView = v.findViewById(R.id.name)
+            checkBox = v.findViewById(R.id.contact_check)
         }
     }
 
@@ -33,32 +34,45 @@ class UserListAdapter (private val users:ArrayList<User>):
     ): UserHolder {
         val layout =
             LayoutInflater.from(parent.context).inflate(R.layout.user_item, parent, false)
-        val contactChecked = layout.findViewById<CheckBox>(R.id.contact_check)
-        val contactName = layout.findViewById<TextView>(R.id.name)
-        val contactImage = layout.findViewById<CircleImageView>(R.id.photo)
-        val listOfContacts = GroupContacts.contacts
-
-
-        contactChecked.setOnClickListener {
-            for(contact in ContactsData.contacts){
-                if(contact.name == contactName.text){
-                    GroupContacts.contacts.add(contact)
-                }
-            }
-        }
-
 
 
         return UserHolder(layout)
     }
 
     override fun onBindViewHolder(holder: UserHolder, position: Int) {
-        val user = users[position]
-        holder.nameView.text = user.name
-        holder.photoView.setImageResource(user.photo)
+
+
+
+        var user:User
+        if (contacts==null){
+            user = group.people[position]
+
+        } else{
+            user = contacts[position]
+            if (user in group.people){
+                holder.checkBox.setChecked(true)
+            }
+        }
+
+        holder.checkBox.setOnCheckedChangeListener { _, b ->
+            if(b){
+                group.people.add(user)
+            }else{
+                group.people.remove(user)
+        }
     }
 
-    override fun getItemCount() = users.size
+    holder.nameView.text = user.name
+    holder.photoView.setImageResource(user.photo)
+    }
+
+    override fun getItemCount():Int {
+        when(contacts){
+            null->return group.people.size
+            else->return contacts.size
+        }
+    }
+
 
 
 }

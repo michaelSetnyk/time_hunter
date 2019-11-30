@@ -15,28 +15,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.PermissionChecker.PERMISSION_DENIED
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.timehunter.GroupsData.groups
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_create_group.*
-
+import com.google.android.material.textfield.TextInputEditText
 
 class CreateGroupFragment : Fragment() {
 
-    private lateinit var groupName:String
-    private lateinit var groupDesc:String
-    private var contactsAdded = false
+    private lateinit var group: Group
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        groupName=""
-        groupDesc=""
+        group= Group("","",R.drawable.ic_group_black_24dp)
     }
 
     override fun onCreateView(
@@ -48,30 +45,19 @@ class CreateGroupFragment : Fragment() {
         val cancelAction = layout.findViewById<TextView>(R.id.cancel_button)
         val confirm = layout.findViewById<TextView>(R.id.confirm_button)
         val groupPhotoButton = layout.findViewById<CircleImageView>(R.id.groupPhotoAdd)
-        val groupNameText = layout.findViewById<EditText>(R.id.group_name_label)
-        val groupDescText = layout.findViewById<EditText>(R.id.group_description1)
+        val groupNameText = layout.findViewById<TextInputEditText>(R.id.group_name)
+        val groupDescText = layout.findViewById<TextInputEditText>(R.id.group_description)
         val contactAddButton = layout.findViewById<Button>(R.id.add_contact_button)
         val contactList = layout.findViewById<TextView>(R.id.contactList)
         val importButton = layout.findViewById<Button>(R.id.import_contact_button)
 
         val context = requireContext()
-
-        (activity as MainActivity).supportActionBar?.title = "Create Group"
-        contactList.setText("Group Members \n")
-        if(contactsAdded){
-            for(contact in GroupContacts.contacts){
-                contactList.append(contact.name + "\n")
-            }
-        }
+        val navController = findNavController()
 
 
         confirm.setOnClickListener{
-            contactsAdded = true
-            contactList.setText("Group Members: \n")
-            val group = Group(groupName.toString(), groupDesc.toString(),R.drawable.ic_group_black_24dp, GroupContacts.contacts)
-            groups.add(group)
-            val navController = findNavController()
-            navController.navigate(R.id.confrimGroup)
+            val action = CreateGroupFragmentDirections.actionCreateGroupFragmentToConfrimGroup(group)
+            navController.navigate(action)
         }
 
         cancelAction.setOnClickListener{
@@ -80,7 +66,6 @@ class CreateGroupFragment : Fragment() {
                 .setCancelable(false)
                 .setPositiveButton("Delete", DialogInterface.OnClickListener(){_,_ ->
                     //We can add people in a sec
-                    val navController = findNavController()
                     navController.popBackStack()
                 })
                 //.setNeutralButton("Continue Creating Group", DialogInterface.OnClickListener(){
@@ -102,9 +87,8 @@ class CreateGroupFragment : Fragment() {
         }
 
         contactAddButton.setOnClickListener{
-            contactsAdded = true
-            val navController = findNavController()
-            navController.navigate(R.id.contactsPage2)
+            val action = CreateGroupFragmentDirections.actionCreateGroupFragmentToContactsPage2(group)
+            navController.navigate(action)
         }
 
         importButton.setOnClickListener{
@@ -126,7 +110,7 @@ class CreateGroupFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                groupName = s.toString()
+                group.name= s.toString()
             }
         })
 
@@ -139,9 +123,14 @@ class CreateGroupFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                groupDesc = s.toString()
+                group.summary = s.toString()
             }
         })
+
+        contactList.text=""
+        for(contact in group.people){
+            contactList.append(contact.name + "\n")
+        }
 
         contactList.movementMethod =  ScrollingMovementMethod()
 

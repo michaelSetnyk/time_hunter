@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Home"
+        android:id="@id/action_global_mainFragment"
+        android:icon="@drawable/ic_home_black_24dp"/>
     <item android:title="@string/contacts"
         android:id="@+id/bottomNavigationContactMenuId"
         android:icon="@drawable/ic_contacts_black_24dp"/>
@@ -9,7 +12,4 @@
     <item android:title="@string/group"
         android:id="@id/action_global_createGroupsPage"
         android:icon="@drawable/ic_people_black_24dp"/>
-    <item android:title="@string/add"
-        android:id="@+id/bottom_navigation"
-        android:icon="@drawable/ic_add_black_24dp"/>
     </menu>

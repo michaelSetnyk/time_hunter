@@ -1,6 +1,9 @@
 package com.example.timehunter
 
+import android.app.PendingIntent.getActivity
+import android.content.res.Configuration
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -35,24 +38,25 @@ class MainActivity :  AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
         navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener{_, dest, _ ->
-            if (dest.id == R.id.createGroupFragment){
+            if (dest.id == R.id.createGroupFragment ||
+                dest.id == R.id.fragment_contacts_page ||
+                dest.id == R.id.confrimGroup ||
+                dest.id == R.id.contactsPage2){
                 bottomNavigationView.visibility = View.GONE
             }else{
                 bottomNavigationView.visibility = View.VISIBLE
             }
 
-            toolbar.title=""
         }
 
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfig) || super.onSupportNavigateUp()
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
-}
 
+}

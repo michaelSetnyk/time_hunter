@@ -2,40 +2,74 @@ package com.example.timehunter
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import kotlinx.android.synthetic.main.confirm_group.*
 import org.w3c.dom.Text
+import java.util.ArrayList
 
-class ConfrimGroup : AppCompatActivity(){
+class ConfrimGroup: Fragment(){
+
+    val args: ConfrimGroupArgs by navArgs()
+
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.confirm_group)
+    }
 
-        val receive_name = findViewById<TextView>(R.id.confirm_group_name)
-        receive_name.setText(intent.getStringExtra("GroupName"))
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val layout = inflater.inflate(R.layout.confirm_group, container, false)
+        val editButton = layout.findViewById<TextView>(R.id.edit_button)
+        val cancelButton = layout.findViewById<TextView>(R.id.confirm_page_cancel_button)
+        val createButton = layout.findViewById<TextView>(R.id.confirm_page_confirm_button)
+        val contactList = layout.findViewById<TextView>(R.id.contactList)
+        val groupName = layout.findViewById<TextView>(R.id.confirm_group_name)
+        val groupDesc = layout.findViewById<TextView>(R.id.confirm_group_desc)
+        val navController = findNavController()
 
-        val receive_desc = findViewById<TextView>(R.id.confirm_group_desc)
-        receive_desc.setText(intent.getStringExtra("GroupDesc"))
+        val group = args.group
 
-        val editButton = findViewById<TextView>(R.id.edit_text)
+        groupName.setText(group.name)
+        groupDesc.setText(group.summary)
+
+
+        for(contacts in group.people){
+            contactList.append(contacts.name + "\n")
+        }
+
         editButton.setOnClickListener{
-            finish()
+            navController.popBackStack()
         }
 
-        val cancelButton = findViewById<TextView>(R.id.cancel_action)
         cancelButton.setOnClickListener{
-            finish()
+            navController.popBackStack()
         }
 
-        val createButton = findViewById<TextView>(R.id.create_text)
         createButton.setOnClickListener{
-            Toast.makeText(this, "Group Saved", Toast.LENGTH_SHORT).show()
-            intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            //Toast.makeText(activity.applicationContext, "Group Saved", Toast.LENGTH_SHORT).show()
+            // MOVE INTO FRAGMENT and navigate using UI to the group that's created
+            val a = ViewGroupFragment.newInstance(group).arguments
+            navController.navigate(R.id.action_confrimGroup_to_viewGroupFragment, a)
         }
+
+        return layout
     }
 
 }

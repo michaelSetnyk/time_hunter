@@ -16,11 +16,15 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.confirm_group.*
 import org.w3c.dom.Text
 import java.util.ArrayList
 
-class ConfrimGroup : Fragment(){
+class ConfrimGroup: Fragment(){
+
+    val args: ConfrimGroupArgs by navArgs()
+
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -40,11 +44,13 @@ class ConfrimGroup : Fragment(){
         val groupDesc = layout.findViewById<TextView>(R.id.confirm_group_desc)
         val navController = findNavController()
 
-        groupName.setText(GroupsData.groups[GroupsData.groups.size - 1].name)
-        groupDesc.setText(GroupsData.groups[GroupsData.groups.size - 1].summary)
+        val group = args.group
+
+        groupName.setText(group.name)
+        groupDesc.setText(group.summary)
 
 
-        for(contacts in GroupContacts.contacts){
+        for(contacts in group.people){
             contactList.append(contacts.name + "\n")
         }
 
@@ -59,7 +65,7 @@ class ConfrimGroup : Fragment(){
         createButton.setOnClickListener{
             //Toast.makeText(activity.applicationContext, "Group Saved", Toast.LENGTH_SHORT).show()
             // MOVE INTO FRAGMENT and navigate using UI to the group that's created
-            val a = ViewGroupFragment.newInstance(GroupsData.groups[GroupsData.groups.size - 1]).arguments
+            val a = ViewGroupFragment.newInstance(group).arguments
             navController.navigate(R.id.action_confrimGroup_to_viewGroupFragment, a)
         }
 

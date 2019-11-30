@@ -20,9 +20,9 @@ data class GroupEventItem(val title: String, val description:String, val iconId:
 
 // We should have an Event class but due to time group is fine
 @Parcelize
-data class Group (val name: String,
-                  val summary: String,
-                  val icon :Int = R.drawable.ic_group_black_24dp,
+data class Group (var name: String,
+                  var summary: String,
+                  var icon :Int = R.drawable.ic_group_black_24dp,
                   var people: ArrayList<User> = ArrayList<User>(),
                   var events: ArrayList<Group> = ArrayList<Group>()) :Parcelable
 

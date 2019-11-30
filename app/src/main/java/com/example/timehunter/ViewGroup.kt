@@ -86,15 +86,17 @@ class ViewGroupFragment : Fragment() {
         val addContactDrawerButton = contactsHeaderLayout.findViewById<FloatingActionButton>(R.id.add_contact)
         val navController = findNavController()
 
-        addContactButton.setOnClickListener {
-            navController.navigate(R.id.contactsPage2)
-        }
-        addContactDrawerButton.setOnClickListener{
-            navController.navigate(R.id.contactsPage2)
-        }
-
         val context = requireContext()
         group = arguments!!.getParcelable<Group>(ARG_GROUP) as Group
+        addContactButton.setOnClickListener {
+            val action = ViewGroupFragmentDirections.actionViewGroupFragmentToContactsPage2(group)
+            navController.navigate(action)
+        }
+        addContactDrawerButton.setOnClickListener{
+            val action = ViewGroupFragmentDirections.actionViewGroupFragmentToContactsPage2(group)
+            navController.navigate(action)
+        }
+
         val icon =  group.icon
         val title = group.name
         val description = group.summary
@@ -199,7 +201,7 @@ fun configureContacts(iconsViewer: RecyclerView, contactsList: RecyclerView, con
         contactsList.apply {
             setHasFixedSize(true)
             layoutManager = contactsListManger
-            adapter = UserListAdapter(contacts)
+            adapter = UserListAdapter(group)
         }
     }
 

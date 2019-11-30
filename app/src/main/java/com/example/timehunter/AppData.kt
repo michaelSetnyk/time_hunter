@@ -25,10 +25,6 @@ object GroupPhoto{
     val groupIcons = ArrayList<Uri?>()
 }
 
-object GroupContacts{
-    val contacts = ArrayList<User>()
-}
-
 object GroupsData{
     private val hci_contacts= arrayListOf(ContactsData.one,ContactsData.twelve)
     private  val uoit_contacts= ContactsData.contacts

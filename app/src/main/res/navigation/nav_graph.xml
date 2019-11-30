@@ -32,12 +32,6 @@
             android:id="@+id/action_createGroupFragment_to_confrimGroup"
             app:destination="@id/confrimGroup" />
         <action
-            android:id="@+id/action_createGroupFragment_to_confrimGroup2"
-            app:destination="@id/confrimGroup" />
-        <action
-            android:id="@+id/action_createGroupFragment_to_confrimGroup3"
-            app:destination="@id/confrimGroup" />
-        <action
             android:id="@+id/action_createGroupFragment_to_contactsPage2"
             app:destination="@id/contactsPage2" />
     </fragment>
@@ -59,6 +53,9 @@
             app:destination="@id/createGroupFragment"
             app:popUpTo="@+id/groupsPageFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_viewGroupFragment_to_contactsPage2"
+            app:destination="@+id/contactsPage2" />
     </fragment>
     <fragment
         android:id="@+id/confrimGroup"
@@ -73,10 +70,17 @@
             app:destination="@id/viewGroupFragment"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="false" />
+        <argument
+            android:name="group"
+            app:argType="com.example.timehunter.Group" />
     </fragment>
     <fragment
         android:id="@+id/contactsPage2"
         android:name="com.example.timehunter.ContactsPage"
-        android:label="Contacts" />
+        android:label="Contacts" >
+        <argument
+            android:name="group"
+            app:argType="com.example.timehunter.Group" />
+    </fragment>
 
 </navigation>

@@ -15,7 +15,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.PermissionChecker.PERMISSION_DENIED
@@ -25,7 +24,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.timehunter.GroupsData.groups
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_create_group.*
-
+import com.google.android.material.textfield.TextInputEditText
 
 class CreateGroupFragment : Fragment() {
 
@@ -48,8 +47,8 @@ class CreateGroupFragment : Fragment() {
         val cancelAction = layout.findViewById<TextView>(R.id.cancel_button)
         val confirm = layout.findViewById<TextView>(R.id.confirm_button)
         val groupPhotoButton = layout.findViewById<CircleImageView>(R.id.groupPhotoAdd)
-        val groupNameText = layout.findViewById<EditText>(R.id.group_name_label)
-        val groupDescText = layout.findViewById<EditText>(R.id.group_description1)
+        val groupNameText = layout.findViewById<TextInputEditText>(R.id.group_name)
+        val groupDescText = layout.findViewById<TextInputEditText>(R.id.group_description)
         val contactAddButton = layout.findViewById<Button>(R.id.add_contact_button)
         val contactList = layout.findViewById<TextView>(R.id.contactList)
         val importButton = layout.findViewById<Button>(R.id.import_contact_button)

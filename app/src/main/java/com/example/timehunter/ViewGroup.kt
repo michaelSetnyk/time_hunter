@@ -41,6 +41,9 @@ import kotlin.collections.HashSet
 
 class ViewGroupFragment : Fragment() {
 
+
+
+
     companion object {
         const val ARG_GROUP = "GROUP"
 
@@ -54,6 +57,7 @@ class ViewGroupFragment : Fragment() {
             return fragment
         }
     }
+
 
     private lateinit var group: Group
 
@@ -159,6 +163,8 @@ class ViewGroupFragment : Fragment() {
             }
         // This may be time permitting
         //addContactButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.add_contact,FragArgs))
+
+
 
         return layout
     }

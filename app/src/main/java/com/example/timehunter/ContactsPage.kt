@@ -17,6 +17,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.fragment_create_group.*
 
 class ContactsPage : Fragment() {
@@ -32,7 +33,7 @@ class ContactsPage : Fragment() {
         val layout = inflater.inflate(R.layout.fragment_contact_page, container, false)
         val contactsView = layout.findViewById<RecyclerView>(R.id.contact_recycler)
         val layoutManger = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val confirm = layout.findViewById<Button>(R.id.done_button)
+        val confirm = layout.findViewById<MaterialButton>(R.id.done_button)
 
         confirm.setOnClickListener{
             val navController = findNavController()

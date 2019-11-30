@@ -11,7 +11,7 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/confirm_group_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/confirm_page_title"
@@ -26,23 +26,25 @@
 
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/group_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/group_name_label"
         android:textColor="@color/colorPrimary"
+        android:layout_marginStart="10dp"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.121" />
+        app:layout_constraintVertical_bias="0.119" />
 
     <TextView
         android:id="@+id/confirm_group_name"
-        android:layout_width="404dp"
+        android:layout_width="match_parent"
         android:layout_height="46dp"
+        android:layout_marginStart="10dp"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,24 +55,26 @@
         app:layout_constraintVertical_bias="0.164" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/group_desc_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/group_desc_label"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24" />
+        app:layout_constraintVertical_bias="0.237" />
 
     <TextView
         android:id="@+id/confirm_group_desc"
-        android:layout_width="361dp"
+        android:layout_width="match_parent"
         android:layout_height="87dp"
         android:textColor="@color/colorPrimary"
+        android:layout_marginStart="10dp"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,15 +87,16 @@
         android:id="@+id/confirm_contacts_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/confirm_group_contacts"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.456" />
+        app:layout_constraintVertical_bias="0.455" />
 
     <Button
         android:id="@+id/confirm_page_confirm_button"
@@ -131,8 +136,9 @@
 
     <TextView
         android:id="@+id/contactList"
-        android:layout_width="311dp"
+        android:layout_width="match_parent"
         android:layout_height="111dp"
+        android:layout_marginStart="10dp"
         android:textColor="@color/colorPrimary"
         android:textSize="22dp"
         app:layout_constraintBottom_toBottomOf="parent"

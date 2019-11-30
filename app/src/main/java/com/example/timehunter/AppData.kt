@@ -1,5 +1,8 @@
 package com.example.timehunter
 
+import android.net.Uri
+import java.net.URI
+
 object ContactsData{
     val one = User("Alex Adams",  R.mipmap.p1 )
     val two = User("Allisa Lin", R.mipmap.p2)
@@ -8,20 +11,22 @@ object ContactsData{
     val five = User("Dad", R.mipmap.p5)
     val six = User("Dottie Bruce", R.mipmap.p6)
     val seven = User("Jenna Corine", R.mipmap.p7)
-    val eight =User("Leatrice Tory", R.mipmap.p8)
+    val eight = User("Leatrice Tory", R.mipmap.p8)
     val nine = User("Momma Bear", R.mipmap.p9)
     val ten = User("Steven Calahone", R.mipmap.p10)
     val eleven = User("Thompson Torioni", R.mipmap.p11)
-    val twelve =User("Will Logan", R.mipmap.p12)
+    val twelve = User("Will Logan", R.mipmap.p12)
     var contacts = arrayListOf(one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve)
 }
 // In an actual app this would be a database.
 // But we need some dummy data and a DB is too much work
 
-
+object GroupPhoto{
+    val groupIcons = ArrayList<Uri?>()
+}
 
 object GroupContacts{
-    var contacts = ArrayList<User>()
+    val contacts = ArrayList<User>()
 }
 
 object GroupsData{

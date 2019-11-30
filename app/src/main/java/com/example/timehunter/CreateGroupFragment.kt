@@ -1,32 +1,37 @@
 package com.example.timehunter
 
-import android.content.pm.PackageManager
-import android.os.Bundle
 import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_create_group.*
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
-import androidx.core.content.PermissionChecker.*
-import androidx.core.view.isVisible
+import android.widget.Toast
+import androidx.core.content.PermissionChecker.PERMISSION_DENIED
+import androidx.core.content.PermissionChecker.checkSelfPermission
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.timehunter.GroupsData.groups
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.fragment_create_group.*
+
 
 class CreateGroupFragment : Fragment() {
 
     private lateinit var groupName:String
     private lateinit var groupDesc:String
+    private var contactsAdded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +47,8 @@ class CreateGroupFragment : Fragment() {
         val layout = inflater.inflate(R.layout.fragment_create_group, container, false)
         val cancelAction = layout.findViewById<TextView>(R.id.cancel_button)
         val confirm = layout.findViewById<TextView>(R.id.confirm_button)
-        val groupPhotoButton = layout.findViewById<ImageButton>(R.id.groupPhotoAdd)
-        val groupNameText = layout.findViewById<EditText>(R.id.group_name)
+        val groupPhotoButton = layout.findViewById<CircleImageView>(R.id.groupPhotoAdd)
+        val groupNameText = layout.findViewById<EditText>(R.id.group_name_label)
         val groupDescText = layout.findViewById<EditText>(R.id.group_description1)
         val contactAddButton = layout.findViewById<Button>(R.id.add_contact_button)
         val contactList = layout.findViewById<TextView>(R.id.contactList)
@@ -53,13 +58,16 @@ class CreateGroupFragment : Fragment() {
 
         (activity as MainActivity).supportActionBar?.title = "Create Group"
         contactList.setText("Group Members \n")
-        for(contact in GroupContacts.contacts){
-            contactList.append(contact.name + "\n")
+        if(contactsAdded){
+            for(contact in GroupContacts.contacts){
+                contactList.append(contact.name + "\n")
+            }
         }
 
 
-
         confirm.setOnClickListener{
+            contactsAdded = true
+            contactList.setText("Group Members: \n")
             val group = Group(groupName.toString(), groupDesc.toString(),R.drawable.ic_group_black_24dp, GroupContacts.contacts)
             groups.add(group)
             val navController = findNavController()
@@ -90,10 +98,11 @@ class CreateGroupFragment : Fragment() {
             } else {
                 pickImageFromGallery()
             }
+
         }
 
         contactAddButton.setOnClickListener{
-
+            contactsAdded = true
             val navController = findNavController()
             navController.navigate(R.id.contactsPage2)
         }
@@ -133,6 +142,8 @@ class CreateGroupFragment : Fragment() {
                 groupDesc = s.toString()
             }
         })
+
+        contactList.movementMethod =  ScrollingMovementMethod()
 
         return layout
     }
@@ -183,6 +194,7 @@ class CreateGroupFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE){
             groupPhotoAdd.setImageURI(data?.data)
+            GroupPhoto.groupIcons.add(data?.data)
         }
     }
 }

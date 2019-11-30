@@ -80,6 +80,14 @@ class ViewGroupFragment : Fragment() {
         val contactsNavigationView = layout.findViewById<NavigationView>(R.id.contactsNavigationView)
         val contactsHeaderLayout = contactsNavigationView.getHeaderView(0)
         val addContactDrawerButton = contactsHeaderLayout.findViewById<FloatingActionButton>(R.id.add_contact)
+        val navController = findNavController()
+
+        addContactButton.setOnClickListener {
+            navController.navigate(R.id.contactsPage2)
+        }
+        addContactDrawerButton.setOnClickListener{
+            navController.navigate(R.id.contactsPage2)
+        }
 
         val context = requireContext()
         group = arguments!!.getParcelable<Group>(ARG_GROUP) as Group

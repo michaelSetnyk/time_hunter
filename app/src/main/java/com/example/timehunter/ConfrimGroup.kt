@@ -43,6 +43,7 @@ class ConfrimGroup : Fragment(){
         groupName.setText(GroupsData.groups[GroupsData.groups.size - 1].name)
         groupDesc.setText(GroupsData.groups[GroupsData.groups.size - 1].summary)
 
+
         for(contacts in GroupContacts.contacts){
             contactList.append(contacts.name + "\n")
         }
@@ -58,8 +59,6 @@ class ConfrimGroup : Fragment(){
         createButton.setOnClickListener{
             //Toast.makeText(activity.applicationContext, "Group Saved", Toast.LENGTH_SHORT).show()
             // MOVE INTO FRAGMENT and navigate using UI to the group that's created
-            val newContactList = ArrayList<User>()
-            ContactsData.contacts = newContactList
             val a = ViewGroupFragment.newInstance(GroupsData.groups[GroupsData.groups.size - 1]).arguments
             navController.navigate(R.id.action_confrimGroup_to_viewGroupFragment, a)
         }

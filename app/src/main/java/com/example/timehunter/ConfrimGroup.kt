@@ -64,7 +64,8 @@ class ConfrimGroup: Fragment(){
 
         createButton.setOnClickListener{
             //Toast.makeText(activity.applicationContext, "Group Saved", Toast.LENGTH_SHORT).show()
-            // MOVE INTO FRAGMENT and navigate using UI to the group that's created
+            // MOVE INTO FRAGMENT and navigate using UI to the group that's createda
+            GroupsData.groups.add(group)
             val a = ViewGroupFragment.newInstance(group).arguments
             navController.navigate(R.id.action_confrimGroup_to_viewGroupFragment, a)
         }

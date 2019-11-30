@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
-import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.RecyclerView
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.parcel.Parcelize
@@ -34,8 +33,6 @@ class UserListAdapter (val group: Group, private val contacts :ArrayList<User>? 
     ): UserHolder {
         val layout =
             LayoutInflater.from(parent.context).inflate(R.layout.user_item, parent, false)
-
-
         return UserHolder(layout)
     }
 

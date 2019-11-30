@@ -51,8 +51,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/group_name"
-                android:layout_width="375dp"
-                android:layout_height="66dp"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
                 android:hint="Group Name"
                 android:inputType="text"
                 android:maxLength="57"
@@ -65,8 +65,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/group_description"
-                android:layout_width="375dp"
-                android:layout_height="66dp"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:hint="Group Description"
                 android:inputType="textCapSentences|textMultiLine"

@@ -29,7 +29,7 @@
     <TextView
         android:id="@+id/confirm_group_name"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"/>
@@ -46,7 +46,7 @@
     <TextView
         android:id="@+id/confirm_group_desc"
         android:layout_width="match_parent"
-        android:layout_height="87dp"
+        android:layout_height="wrap_content"
         android:textColor="@color/colorPrimary"
         android:layout_marginStart="10dp"
         android:textSize="16sp"/>
@@ -63,7 +63,7 @@
         <TextView
             android:id="@+id/contactList"
             android:layout_width="match_parent"
-            android:layout_height="111dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:textColor="@color/colorPrimary"
             android:textSize="22dp"/>
